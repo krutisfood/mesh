@@ -1,0 +1,112 @@
+#!/usr/bin/env ruby
+require 'gli'
+begin # XXX: Remove this begin/rescue before distributing your app
+require 'mesh'
+rescue LoadError
+  STDERR.puts "In development, you need to use `bundle exec bin/mesh` to run your app"
+  STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
+  STDERR.puts "Feel free to remove this message from bin/mesh now"
+  exit 64
+end
+
+include GLI::App
+
+program_desc 'VMWare command suite interface'
+
+version Mesh::VERSION
+
+desc 'Ignore SSL Certificate errors in connection'
+switch [:insecure]
+
+desc 'VCenter username'
+#default_value 'the default'
+arg_name 'username'
+flag [:u,:username]
+
+desc 'VCenter password'
+arg_name 'password'
+flag [:p,:password]
+
+desc 'VCenter host'
+arg_name 'vcenter host'
+flag [:h,:host]
+
+desc 'VCenter Resource Pool'
+arg_name 'vcenter resource pool'
+flag [:r,:resource_pool]
+
+desc 'Describe create here'
+arg_name 'Describe arguments to create here'
+command :create do |c|
+  c.desc 'Virtual Machine Template over-riding defined platform default'
+  c.default_value Mesh::template[:windows]
+  c.flag :template
+  c.action do |global_options,options,args|
+
+    # Your command logic here
+     
+    # If you have any errors, just raise them
+    # raise "that command made no sense"
+    ARGV.size >= 2 or abort "must specify VM type and VM target name"
+    vm_type   = ARGV.shift
+    vm_target = ARGV.shift
+
+    puts "create command ran with \n\tArgs:#{args}\n\tOptions:#{options.to_s}\n\tGlobal Options: #{global_options.to_s}"
+    #VmTemplate.new 
+  end
+end
+
+desc 'TODO Describe list here'
+arg_name 'TODO Describe arguments to list here'
+command :list do |c|
+  c.action do |global_options,options,args|
+    puts "list command ran"
+  end
+end
+
+desc 'TODO Describe destroy here'
+arg_name 'Describe arguments to destroy here'
+command :destroy do |c|
+  c.action do |global_options,options,args|
+    puts "destroy command ran"
+  end
+end
+
+desc 'TODO Describe run here'
+arg_name 'Describe arguments to run here'
+command :run do |c|
+  c.action do |global_options,options,args|
+    puts "run command ran"
+  end
+end
+
+desc 'TODO Describe info here'
+arg_name 'Describe arguments to info here'
+command :info do |c|
+  c.action do |global_options,options,args|
+    puts "info command ran"
+  end
+end
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abort and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+exit run(ARGV)
