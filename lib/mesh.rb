@@ -5,3 +5,7 @@ require 'mesh/version.rb'
 
 require 'mesh/server_defaults.rb'
 require 'mesh/machine.rb'
+require 'mesh/logger.rb'
+require 'mesh/create.rb'
+require 'mesh/list.rb'
+require 'mesh/custom_spec.rb'
