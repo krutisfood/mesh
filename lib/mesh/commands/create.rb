@@ -28,8 +28,8 @@ command :create do |c|
     spec_mgr = vim.serviceContent.customizationSpecManager
     spec = Mesh::CustomSpec::Get(spec_mgr, template[:spec])
     spec.destination_ip_address = options[:ip_address] if options[:ip_address]
-    @logger.debug "Chasing resource pool #{resource_pool}"
-    pool = Datacentre::find_pool(vim, global_options[:resource_pool])
+    @logger.debug "Chasing resource pool #{global_options[:resource_pool]}"
+    pool = Mesh::Datacentre::find_pool(vim, global_options[:resource_pool])
     new_vm = vm_template.clone(vm_target, spec, pool)
     @logger.debug new_vm.inspect
   end

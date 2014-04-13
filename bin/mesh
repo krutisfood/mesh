@@ -20,6 +20,7 @@ program_long_desc 'A command suite to allow users to manage VMWare virtual machi
 version Mesh::VERSION
 Mesh.logger = Logger.new(STDOUT)
 @logger = Mesh.logger
+@logger.debug "Meh, logger looks good"
 
 desc 'Ignore SSL Certificate errors in connection'
 switch [:insecure]

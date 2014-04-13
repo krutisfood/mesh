@@ -22,11 +22,13 @@ module Mesh
     def destination_ip_address=(ip)
       Mesh::logger.debug "Setting spec ip address to #{ip}"
       #@logger.debug "Setting spec ip address to #{ip}"
-      @spec.nicSettingMap.first.adapter.ip.ipAddress = ip
+      #@spec.nicSettingMap.first.adapter.ip.ipAddress = ip
+      Mesh::logger.debug "Ip adapter... #{@spec.nicSettingMap.first.adapter.ip.inspect}"
+      @spec.nicSettingMap.first.adapter.ip = ip
     end
 
     def destination_ip_address
-      @spec.nicSettingMap.first.adapter.ip.ipAddress 
+      @spec.nicSettingMap.first.adapter.ip
     end
   end
 end

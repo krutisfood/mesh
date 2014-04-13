@@ -5,7 +5,7 @@ module Mesh
 
     def self.find_pool(vim,poolName)
       dcname = nil
-      puts "Looking for datacenter pool #{poolName}"
+      Mesh::logger.debug "Looking for datacenter pool #{poolName}"
       dc = vim.serviceInstance.find_datacenter(dcname) or abort "datacenter not found"
       baseEntity = dc.hostFolder
       entityArray = poolName.split('/')

@@ -39,7 +39,7 @@ module Mesh
     end
 
     def clone (vm_target, custom_spec = nil, pool = nil)
-      @logger "Cloning #{@name} to a new vm named #{vm_target}."
+      Mesh::logger.info "Cloning #{@name} to a new vm named #{vm_target}."
       relocateSpec = RbVmomi::VIM.VirtualMachineRelocateSpec(:diskMoveType => :moveChildMostDiskBacking,
         :pool => pool)
 
