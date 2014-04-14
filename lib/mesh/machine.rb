@@ -43,13 +43,12 @@ module Mesh
       relocateSpec = RbVmomi::VIM.VirtualMachineRelocateSpec(:diskMoveType => :moveChildMostDiskBacking,
         :pool => pool)
 
-      spec = RbVmomi::VIM.VirtualMachineCloneSpec(:location => relocateSpec,
+      clone_spec = RbVmomi::VIM.VirtualMachineCloneSpec(:location => relocateSpec,
                                          :powerOn  => false,
                                          :template => false)
-      spec.customization = custom_spec.spec if custom_spec
-      #spec.customization.nicSettingMap.first.adapter.ip = '10.10.101.82'
+      clone_spec.customization = custom_spec.spec if custom_spec
 
-      Machine.new(@vm.CloneVM_Task(:folder => @vm.parent, :name => vm_target, :spec => spec).wait_for_completion)
+      Machine.new(@vm.CloneVM_Task(:folder => @vm.parent, :name => vm_target, :spec => clone_spec).wait_for_completion)
     end
   end
 end
