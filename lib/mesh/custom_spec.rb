@@ -7,14 +7,14 @@ module Mesh
       @spec = spec
     end
 
-    def self.Get(custom_spec_manager, name)
+    def self.get(custom_spec_manager, name)
       Mesh::logger.debug "Looking for spec #{name}"
-      CustomSpec.new(custom_spec_manager.GetCustomizationSpec(:name => name).spec) or raise "Didn't find the custom spec!"
+      CustomSpec.new(custom_spec_manager.GetCustomizationSpec(:name => name).spec) or raise "unable to find the custom spec #{name}."
     end
 
     def destination_ip_address=(ip)
       Mesh::logger.debug "Setting spec ip address to #{ip}"
-      @spec.nicSettingMap.first.adapter.ip = RbVmomi::VIM::CustomizationFixedIp("ipAddress" => ip) if ip
+      @spec.nicSettingMap.first.adapter.ip = RbVmomi::VIM::CustomizationFixedIp("ipAddress" => ip)
     end
 
     def destination_ip_address

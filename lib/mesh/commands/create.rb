@@ -6,6 +6,9 @@ command :create do |c|
   c.default_value Mesh::template[:windows]
   c.flag :template
 =end
+  c.desc 'Destination datastore'
+  c.flag :datastore
+
   c.desc 'Destination Machine IP Address'
   c.flag :ip_address
   c.action do |global_options,options,args|
@@ -21,17 +24,31 @@ command :create do |c|
     @logger.debug @config.inspect
     # VmTemplate.new 
     # VIM = RbVmomi::VIM
-    @logger.debug "Getting VIM connection"
-    vim = RbVmomi::VIM.connect global_options
-    vm_template = Mesh::Machine::Get(vim, global_options[:datacentre], template[:name])
-    # TODO spec mgr  factory
-    spec_mgr = vim.serviceContent.customizationSpecManager
-    spec = Mesh::CustomSpec::Get(spec_mgr, template[:spec])
+    #vim = RbVmomi::VIM.connect global_options
+    vm_manager = Mesh::VSphere.new global_options
+    #vm_template = Mesh::Machine::Get(vim, global_options[:datacenter], template[:name])
+    vm_template = vm_manager.get_machine(template[:name], global_options[:datacenter])
+    # TODO spec mgr factory
+    #spec_mgr = vim.serviceContent.customizationSpecManager
+    #spec = Mesh::CustomSpec::Get(spec_mgr, template[:spec])
+    spec = vm_manager.get_custom_spec(template[:spec])
     spec.destination_ip_address = options[:ip_address] if options[:ip_address]
     @logger.debug "Chasing resource pool #{global_options[:resource_pool]}"
-    pool = Mesh::Datacentre::find_pool(vim, global_options[:resource_pool])
-    new_vm = vm_template.clone(vm_target, spec, pool)
-    @logger.debug new_vm.inspect
+    #pool = Mesh::Datacenter::find_pool(vim, global_options[:resource_pool])
+    pool = vm_manager.get_resource_pool(global_options[:resource_pool])
+    vm_details = vm_target.match /(.+)\/(.+)/
+    if vm_details
+      vm_folder = vm_details[1]
+      vm_name   = vm_details[2]
+    else
+      vm_folder = '/'
+      vm_name   = vm_target
+    end
+    datacenter = vm_manager.get_datacenter(global_options[:datacenter])
+    datastore = vm_manager.get_datastore(options[:datastore], datacenter)
+    @logger.debug "Creating vm in folder #{vm_folder} with name #{vm_name}."
+    new_vm = vm_template.clone(vm_name, vm_folder, datastore, spec, pool)
+    @logger.info "Created new object #{new_vm.inspect}."
   end
 end
 

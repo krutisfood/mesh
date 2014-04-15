@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 require 'gli'
 begin # XXX: Remove this begin/rescue before distributing your app
-require 'rbvmomi'
 require 'mesh'
 require 'logger'
 rescue LoadError
@@ -37,9 +36,9 @@ desc 'VCenter host'
 arg_name 'vcenter host'
 flag [:h,:host]
 
-desc 'Datacentre'
-arg_name 'datacentre'
-flag [:d,:datacentre]
+desc 'Datacenter'
+arg_name 'datacenter'
+flag [:d,:datacenter]
 
 desc 'VCenter Resource Pool'
 arg_name 'vcenter resource pool'

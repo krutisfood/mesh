@@ -29,7 +29,10 @@ GEM
     gli (2.9.0)
     json (1.8.1)
     logger (1.2.8)
+    metaclass (0.0.4)
     mini_portile (0.5.3)
+    mocha (1.0.0)
+      metaclass (~> 0.0.1)
     multi_json (1.9.2)
     multi_test (0.1.1)
     nokogiri (1.6.1)
@@ -51,5 +54,6 @@ PLATFORMS
 DEPENDENCIES
   aruba
   mesh!
+  mocha
   rake
   rdoc
