@@ -9,7 +9,8 @@ module Mesh
 
     def self.get(custom_spec_manager, name)
       Mesh::logger.debug "Looking for spec #{name}"
-      CustomSpec.new(custom_spec_manager.GetCustomizationSpec(:name => name).spec) or raise "unable to find the custom spec #{name}."
+      spec = custom_spec_manager.GetCustomizationSpec(:name => name).spec or raise "unable to find the custom spec #{name}."
+      CustomSpec.new(spec)
     end
 
     def destination_ip_address=(ip)

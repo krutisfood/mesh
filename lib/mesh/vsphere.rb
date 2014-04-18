@@ -37,5 +37,9 @@ module Mesh
     def get_datacenter(name)
       Mesh::Datacenter::get(@vim, name)
     end
+
+    def root_folder
+      @vim.serviceInstance.content.rootFolder
+    end
   end
 end

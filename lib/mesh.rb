@@ -12,3 +12,9 @@ require 'mesh/custom_spec.rb'
 require 'mesh/datacenter.rb'
 require 'mesh/vsphere.rb'
 require 'mesh/datastore.rb'
+
+module Mesh
+  def self.logger
+    @logger ||= Logger.new STDOUT
+  end
+end

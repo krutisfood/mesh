@@ -50,7 +50,7 @@ module Mesh
                                                         :template => false)
       clone_spec.customization = custom_spec.spec if custom_spec
 
-      Mesh::logger.warn "Haven't implemented destination folder location, will be found in the template's folder"
+      Mesh::logger.warn "Destination folder location not yet implemented, the new vm will be found in the source folder"
       Machine.new(@vm.CloneVM_Task(:folder => @vm.parent, :name => vm_name, :spec => clone_spec).wait_for_completion)
     end
   end
