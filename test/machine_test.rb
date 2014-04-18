@@ -7,6 +7,7 @@ include Mesh
 class MachineTest < Test::Unit::TestCase
 
   def setup
+    Mesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)
   end
 
   def teardown

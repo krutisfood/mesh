@@ -14,7 +14,7 @@ module Mesh
     # Can we search through the datacenters for a machine?
     # Should we get the machine from the datacenters?
     def get_machine(machine_name, datacenter)
-      Machine::get(@vim, datacenter, machine_name)
+      Machine::get(self, datacenter, machine_name)
     end
 
     def get_custom_spec(name)

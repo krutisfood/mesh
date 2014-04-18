@@ -9,9 +9,9 @@ module Mesh
       @vm = vm    #root_folder.traverse @name, RbVmomi::VIM::VirtualMachine
     end
 
-    def self.get(vim, datacenter_name, name)
+    def self.get(vs_manager, datacenter_name, name)
       Mesh::logger.debug "looking for vm #{name} at dc #{datacenter_name}."
-      root_folder = vim.serviceInstance.content.rootFolder
+      root_folder = vs_manager.root_folder
       Mesh::logger.debug "not sure we found the root folder champ." unless root_folder
       template_vm = root_folder.traverse(datacenter_name).vmFolder.traverse(name)
       template_vm or raise "unable to find template #{name} at #{datacenter_name}"

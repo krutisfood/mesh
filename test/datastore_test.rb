@@ -4,7 +4,7 @@ require 'mocha/test_unit'
 include RbVmomi
 include Mesh
 
-class VSphereTest < Test::Unit::TestCase
+class DatastoreTest < Test::Unit::TestCase
 
   def setup
     @mock_vim = Object.new
@@ -16,7 +16,19 @@ class VSphereTest < Test::Unit::TestCase
   def teardown
   end
 
-  def test_get_machine_uses_vim_connection
+  def test_get_all
+    mock_datastores = [ 'ds_a','ds_b','ds_c' ]
+    mock_view_manager = Object.new
+    mock_service_content = Object.new
+    mock_service_content.expects(:viewManager).returns(mock_view_manager)
+    @mock_vim.expects(:serviceContent).returns(mock_service_content)
+=begin
+      vim.serviceContent.viewManager.CreateContainerView({
+        :container  => datacenter.dc.datastoreFolder,
+        :type       => ["Datastore"],
+        :recursive  => true
+      }).view
+=end
     vsphere_vm_manager = VSphere.new(@mock_connection_options)
     Machine.expects(:get).returns('fake vm')
     mock_vm = Object.new
@@ -28,17 +40,11 @@ class VSphereTest < Test::Unit::TestCase
     assert vm == mock_vm
   end
 
-  def test_root_folder_gets_from_vim
-    vsphere_vm_manager = VSphere.new(@mock_connection_options)
-    mock_root_folder = Object.new
-    mock_content = Object.new
-    mock_content.expects(:rootFolder).returns(mock_root_folder)
-    mock_service_instance = Object.new
-    mock_service_instance.expects(:content).returns(mock_content)
-    @mock_vim.expects(:serviceInstance).returns(mock_service_instance) #Object.new.expects(:content).expects(:rootFolder).returns('a folder'))
+  def test_get_returns_first_match
+    assert false, "Not yet implemented"
+  end
 
-    root_folder = vsphere_vm_manager.root_folder 
-
-    assert root_folder == mock_root_folder
+  def test_get_returns_first_including_name_if_no_exact_match
+    assert false, "Not yet implemented"
   end
 end
