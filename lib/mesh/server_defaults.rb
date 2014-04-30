@@ -5,7 +5,7 @@ module Mesh
       :spec => 'Windows2012R2_DC_DMZ'
     },
     :windows => {
-      :name => 'Templates/W2012_DC',
+      :name => 'Templates/W2012R2_DC_SR',
       :spec => 'WORKING - 2012R2'
     },
     :linux => {

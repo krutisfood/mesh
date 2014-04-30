@@ -23,15 +23,14 @@ module Mesh
     end
 
     def get_resource_pool(name)
-      # KRUT should this be a ResourcePool wrapper object instead?
+      # KRUT this should be a ResourcePool wrapper object instead?
+      Mesh::logger.debug "Chasing resource pool #{name}"
       Datacenter::find_pool(@vim, name)
     end
 
     def get_datastore(name, datacenter)
       Mesh::logger.debug "Getting datastore #{name}"
-      datastore = Datastore::get(@vim, name, datacenter)
-      # confirm nil if nil or option is not set
-      datastore ||= nil
+      Datastore::get(@vim, name, datacenter)
     end
 
     def get_datacenter(name)

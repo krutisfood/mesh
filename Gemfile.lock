@@ -7,7 +7,6 @@ PATH
       rbvmomi (= 1.8.1)
 
 GEM
-  remote: https://rubygems.org/
   specs:
     aruba (0.5.4)
       childprocess (>= 0.3.6)

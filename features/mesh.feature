@@ -12,3 +12,7 @@ Feature: My bootstrapped app kinda works
     When I get help for "mesh create"
     Then the exit status should be 0
 
+  Scenario: mesh power just runs
+    When I get help for "mesh power"
+    Then the exit status should be 0
+
