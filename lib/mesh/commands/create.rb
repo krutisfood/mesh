@@ -18,7 +18,7 @@ command :create do |c|
     ARGV.size >= 2 or abort "must specify VM type and VM target name"
     vm_type = ARGV.shift
     vm_target = ARGV.shift
-    @logger.debug "Create invoked to create #{vm_target} of type #{vm_type}\n\t#{global_options}\n\t#{options}\n\t#{args}."
+    @logger.debug "Create invoked to create #{vm_target} of type #{vm_type}\n\t#{global_options[:host]}\n\t#{options}\n\t#{args}."
     Mesh::template.has_key? vm_type.to_sym or raise "unknown machine type #{vm_type}, known types are #{Mesh::template.keys.to_s}"
 
     @logger.debug "create command ran with \n\tArgs:#{args}\n\tOptions:#{options.to_s}\n\tGlobal Options: #{global_options.to_s}"

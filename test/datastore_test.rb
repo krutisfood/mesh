@@ -1,5 +1,6 @@
 require 'test_helper'
-require 'mocha/test_unit'
+#gem 'mocha'
+#require 'mocha/test_unit'
 
 include RbVmomi
 include Mesh
@@ -21,8 +22,8 @@ class DatastoreTest < Test::Unit::TestCase
     mock_datastores = [ 'ds_a','ds_b','ds_c' ]
     mock_view_manager = Object.new
     mock_service_content = Object.new
-    mock_service_content.expects(:viewManager).returns(mock_view_manager)
-    @mock_vim.expects(:serviceContent).returns(mock_service_content)
+    #mock_service_content.expects(:viewManager).returns(mock_view_manager)
+    #@mock_vim.expects(:serviceContent).returns(mock_service_content)
 =begin
       vim.serviceContent.viewManager.CreateContainerView({
         :container  => datacenter.dc.datastoreFolder,
@@ -31,7 +32,7 @@ class DatastoreTest < Test::Unit::TestCase
       }).view
 =end
     vsphere_vm_manager = VSphere.new(@mock_connection_options)
-    Machine.expects(:get).returns('fake vm')
+    #Machine.expects(:get).returns('fake vm')
     mock_vm = Object.new
     Machine.stubs( :get ).returns(mock_vm)
            #returns( stub(:cool? => true) ) # returns an object with just a .cool? method which in turn returns true

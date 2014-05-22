@@ -30,7 +30,20 @@ To change the power state of a VM
 
 ## TODOs
 
-* Mesh create polish
+* General
 
-* Start mesh everything else :-)
+  * Define multiple environments in config file, switchable like 'mesh <dc> <action> ...'
 
+  * Server defaults in external configuration, e.g. Symlink to config/shared/ or etcd
+
+* Create
+
+  * Move to destination folder (currently stays in Templates dir)
+
+  * Select datastore based on most free available space
+
+* Power
+  
+  * Query & output state after operation completes
+
+* Mesh everything else :-)

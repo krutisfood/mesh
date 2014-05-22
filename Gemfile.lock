@@ -7,6 +7,7 @@ PATH
       rbvmomi (= 1.8.1)
 
 GEM
+  remote: https://rubygems.org/
   specs:
     aruba (0.5.4)
       childprocess (>= 0.3.6)
@@ -32,11 +33,11 @@ GEM
     mini_portile (0.5.3)
     mocha (1.0.0)
       metaclass (~> 0.0.1)
-    multi_json (1.9.2)
+    multi_json (1.10.0)
     multi_test (0.1.1)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
-    rake (10.2.1)
+    rake (10.3.1)
     rbvmomi (1.8.1)
       builder
       nokogiri (>= 1.4.1)
@@ -53,6 +54,6 @@ PLATFORMS
 DEPENDENCIES
   aruba
   mesh!
-  mocha
+  mocha (= 1.0.0)
   rake
   rdoc

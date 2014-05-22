@@ -16,18 +16,6 @@ class VSphereTest < Test::Unit::TestCase
   def teardown
   end
 
-  def test_get_machine_uses_vim_connection
-    vsphere_vm_manager = VSphere.new(@mock_connection_options)
-    #Machine.expects(:get).returns('fake vm')
-    mock_vm = Object.new
-    Machine.stubs( :get ).returns(mock_vm)
-           #returns( stub(:cool? => true) ) # returns an object with just a .cool? method which in turn returns true
-
-    vm = vsphere_vm_manager.get_machine('fake_machine','fake datacenter')
-    
-    assert vm == mock_vm
-  end
-
   def test_root_folder_gets_from_vim
     vsphere_vm_manager = VSphere.new(@mock_connection_options)
     mock_root_folder = Object.new

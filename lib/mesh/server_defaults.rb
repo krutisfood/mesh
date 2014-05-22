@@ -7,6 +7,7 @@ module Mesh
     :windows => {
       :name => 'Templates/W2012R2_DC_SR',
       :spec => 'WORKING - 2012R2'
+      #:name => 'Templates/W2012R2_DC',
     },
     :linux => {
       :name => 'Templates/CENTOS_6',

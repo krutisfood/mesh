@@ -30,7 +30,8 @@ module Mesh
         }).view.select{|ds| ds.name.include? name}.sort_by{ |ds| ds.summary.capacity - ds.summary.freeSpace }.first
       end
 =end
-      Mesh::logger.debug "May have found #{ds}"
+      Mesh::logger.debug "May have found #{ds.name}" unless ds.nil?
+      Mesh::logger.warn "Didn't find datastore"
       ds
     end
 

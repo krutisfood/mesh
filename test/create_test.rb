@@ -2,6 +2,7 @@ require 'test_helper'
 require 'mesh/commands/create_helpers'
 
 class CreateTest < Test::Unit::TestCase
+#class CreateTest < Test::Test
 
   def setup
     Mesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)

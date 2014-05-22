@@ -5,7 +5,7 @@ spec = Gem::Specification.new do |s|
   s.version = Mesh::VERSION
   s.author = 'Kurt Gardiner'
   s.email = 'k.a.gardiner@gmail.com'
-  #s.homepage = 'http://your.website.com'
+  s.homepage = 'http://github.com/krutisfood'
   s.platform = Gem::Platform::RUBY
   s.summary = 'VMWare command line suite'
   s.files = `git ls-files`.split("
@@ -19,7 +19,9 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency('rake')
   s.add_development_dependency('rdoc')
   s.add_development_dependency('aruba')
-  s.add_development_dependency('mocha')
+  #s.add_development_dependency('mocha','0.12.10')
+  s.add_development_dependency('mocha','1.0.0')
+  #s.add_development_dependency('minitest','3.5.0')
   s.add_runtime_dependency('gli','2.9.0')
   s.add_runtime_dependency('logger','1.2.8')
   s.add_runtime_dependency('rbvmomi','1.8.1')
