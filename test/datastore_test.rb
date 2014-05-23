@@ -1,6 +1,4 @@
 require 'test_helper'
-#gem 'mocha'
-#require 'mocha/test_unit'
 
 include RbVmomi
 include Mesh
@@ -17,36 +15,41 @@ class DatastoreTest < Test::Unit::TestCase
   def teardown
   end
 
-  def test_get_all
-# KRUT Should these be stubs rather than expects? Supply a fake instead of assertion?
-    mock_datastores = [ 'ds_a','ds_b','ds_c' ]
-    mock_view_manager = Object.new
-    mock_service_content = Object.new
-    #mock_service_content.expects(:viewManager).returns(mock_view_manager)
-    #@mock_vim.expects(:serviceContent).returns(mock_service_content)
-=begin
-      vim.serviceContent.viewManager.CreateContainerView({
-        :container  => datacenter.dc.datastoreFolder,
-        :type       => ["Datastore"],
-        :recursive  => true
-      }).view
-=end
-    vsphere_vm_manager = VSphere.new(@mock_connection_options)
-    #Machine.expects(:get).returns('fake vm')
-    mock_vm = Object.new
-    Machine.stubs( :get ).returns(mock_vm)
-           #returns( stub(:cool? => true) ) # returns an object with just a .cool? method which in turn returns true
+  def test_get_gets_exact_match_not_partial
+    fake_ds1,matching_fake,fake_ds2 = Object.new,Object.new,Object.new,Object.new,Object.new
+    fake_ds1.stubs(:name).returns("GRAIN_STORE")
+    fake_ds1.stubs(:free_space).returns(100)
+    matching_fake.stubs(:name).returns "GRAIN_STORE_1"
+    matching_fake.stubs(:free_space).returns(200)
+    fake_ds2.stubs(:name).returns "BRAIN_STORE"
+    fake_ds2.stubs(:free_space).returns(200)
+    stores = [fake_ds1, matching_fake, fake_ds2]
 
-    vm = vsphere_vm_manager.get_machine('fake_machine','fake datacenter')
+    got_all = stub
+    vim,dc = stub,stub
+    Mesh::Datastore.stubs(:get_all).with(vim,dc).returns(stores)
+
+    store = Mesh::Datastore.get vim,'GRAIN_STORE_1',dc
     
-    assert vm == mock_vm
+    assert_equal matching_fake,store
   end
 
-  def test_get_returns_first_match
-    #assert false, "Not yet implemented"
-  end
+  def test_get_returns_partial_with_most_space_when_no_exact_match
+    fake_ds1,matching_fake,fake_ds2 = Object.new,Object.new,Object.new,Object.new,Object.new
+    fake_ds1.stubs(:name).returns("GRAIN_STORE")
+    fake_ds1.stubs(:free_space).returns(100)
+    matching_fake.stubs(:name).returns "GRAIN_STORE_1"
+    matching_fake.stubs(:free_space).returns(200)
+    fake_ds2.stubs(:name).returns "BRAIN_STORE"
+    fake_ds2.stubs(:free_space).returns(20)
+    stores = [fake_ds1, fake_ds2, matching_fake]
 
-  def test_get_returns_first_including_name_if_no_exact_match
-    #assert false, "Not yet implemented"
+    got_all = stub
+    vim,dc = stub,stub
+    Mesh::Datastore.stubs(:get_all).with(vim,dc).returns(stores)
+
+    store = Mesh::Datastore.get vim,'RAIN_STORE',dc
+    
+    assert_equal matching_fake,store
   end
 end

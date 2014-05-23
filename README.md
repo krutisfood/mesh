@@ -16,7 +16,7 @@ Mesh is currently Pre-Alpha, hence the 0-dot version; it is susceptible to metho
 
 To Clone a VM from a template
 
-  mesh create windows myvmname --ip_address='<ip_address>'
+  mesh create windows myvmname [--ip_address='<ip_address>'] --datastore='DOES_PART_MATCH'
 
   mesh -d 'datacenter' -r 'my_resource_pool' --host vsphere.mydom.com.au create linux 'folder/vmware' --ip_address='10.0.0.2' --datastore='DATASTORE'
 
@@ -44,6 +44,6 @@ To change the power state of a VM
 
 * Power
   
-  * Query & output state after operation completes
+  * Query & display state after operation completes
 
 * Mesh everything else :-)
