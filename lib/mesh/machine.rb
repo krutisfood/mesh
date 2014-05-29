@@ -60,10 +60,12 @@ module Mesh
                                                         :powerOn  => false,
                                                         :template => false)
       clone_spec.customization = custom_spec.spec if custom_spec
+      Mesh::logger.debug "Custom spec #{custom_spec} supplied."
 
       Mesh::logger.warn "Destination folder location not yet working, the new vm will be found in the source folder"
-      #Machine.new(@vm.CloneVM_Task(:folder => vm_folder, :name => vm_name, :spec => clone_spec).wait_for_completion)
-      Machine.new(@vm.CloneVM_Task(:folder => vm_folder, :name => vm_name, :spec => clone_spec))
+      vm_folder = @vm.parent
+      Machine.new(@vm.CloneVM_Task(:folder => vm_folder, :name => vm_name, :spec => clone_spec).wait_for_completion)
+      #Machine.new(@vm.CloneVM_Task(:folder => vm_folder, :name => vm_name, :spec => clone_spec))
     end
   end
 end

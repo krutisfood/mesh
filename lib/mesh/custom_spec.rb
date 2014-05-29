@@ -5,6 +5,7 @@ module Mesh
     attr_accessor :ip_address, :spec
     def initialize(spec)
       @spec = spec
+      Mesh::logger.debug "Spec #{spec.inspect}"
     end
 
     def self.get(custom_spec_manager, name)

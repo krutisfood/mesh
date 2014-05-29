@@ -11,10 +11,8 @@ module Mesh
     end
 
     # non wrapped object, gasp!
-    def self.find_pool(vim, name)
-# uh, why bother specifying nil dcname?
-      dcname = nil
-      Mesh::logger.debug "Looking for datacenter pool #{name}"
+    def self.find_pool(vim, name, dcname = nil)
+      Mesh::logger.debug "Looking for datacenter pool #{name} in datacenter named #{dcname}."
       dc = vim.serviceInstance.find_datacenter(dcname) or abort "datacenter not found"
       dc = Datacenter.get(vim, nil).dc
       baseEntity = dc.hostFolder
@@ -35,6 +33,10 @@ module Mesh
 
       baseEntity = baseEntity.resourcePool if not baseEntity.is_a?(RbVmomi::VIM::ResourcePool) and baseEntity.respond_to?(:resourcePool)
       baseEntity
+    end
+
+    def name
+      @dc.name
     end
   end
 end

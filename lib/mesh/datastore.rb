@@ -8,15 +8,18 @@ module Mesh
     end
 
     def self.get(vim, name, datacenter)
-      Mesh::logger.debug "Getting datastore named #{name} at datacenter #{datacenter}." 
+      Mesh::logger.debug "Getting datastore named #{name} at datacenter #{datacenter.name}." 
       stores = self.get_all(vim, datacenter).select{ |ds| ds.name == name }
       if stores.nil? or stores.empty?
         stores = self.get_all(vim, datacenter).select{ |ds| ds.name.include? name }
+        Mesh::logger.debug "Found #{stores.count} datastores."
+        Mesh::logger.debug "#{stores.map{|ds| ds.name}}"
       end
       stores.sort_by{ |ds| ds.free_space }.reverse.first
     end
 
     def self.get_all(vim, datacenter)
+      Mesh::logger.debug "get_all datastores at #{datacenter.name}."
       vim.serviceContent.viewManager.CreateContainerView({
         :container  => datacenter.dc.datastoreFolder,
         :type       => ["Datastore"],

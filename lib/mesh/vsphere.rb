@@ -22,10 +22,10 @@ module Mesh
       CustomSpec::get(spec_mgr, name)
     end
 
-    def get_resource_pool(name)
+    def get_resource_pool(name, datacenter_name)
       # KRUT this should be a ResourcePool wrapper object instead?
       Mesh::logger.debug "Chasing resource pool #{name}"
-      Datacenter::find_pool(@vim, name)
+      Datacenter::find_pool(@vim, name, datacenter_name)
     end
 
     def get_datastore(name, datacenter)
