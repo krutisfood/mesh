@@ -6,7 +6,7 @@ module Mesh
   class VSphere
     attr_accessor :vim, :options
     def initialize(connection_options)
-      Mesh::logger.debug "Trying to get connection with options #{connection_options}"
+      Mesh::logger.debug "Opening connection to #{connection_options['host']}"
       @vim = RbVmomi::VIM.connect connection_options
       @options = connection_options
     end

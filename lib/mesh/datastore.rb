@@ -11,9 +11,10 @@ module Mesh
       Mesh::logger.debug "Getting datastore named #{name} at datacenter #{datacenter.name}." 
       stores = self.get_all(vim, datacenter).select{ |ds| ds.name == name }
       if stores.nil? or stores.empty?
+        Mesh::logger.info "No exact match found, searching for partial match"
         stores = self.get_all(vim, datacenter).select{ |ds| ds.name.include? name }
         Mesh::logger.debug "Found #{stores.count} datastores."
-        Mesh::logger.debug "#{stores.map{|ds| ds.name}}"
+        Mesh::logger.debug "#{stores.map{|ds| "Name #{ds.name}, free space #{ds.free_space}"}}"
       end
       stores.sort_by{ |ds| ds.free_space }.reverse.first
     end
@@ -37,6 +38,10 @@ module Mesh
 
     def capacity
       @ds.summary.capacity
+    end
+
+    def to_s
+      "name: #{name}, free_space: #{free_space}, capacity: #{capacity}"
     end
   end
 end
