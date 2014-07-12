@@ -11,14 +11,29 @@ rescue LoadError
 end
 
 include GLI::App
-config_file '.mesh.rc'
-
-program_desc 'VMWare VSphere command suite interface'
-program_long_desc 'A command suite to allow users to manage VMWare virtual machines remotely via the command line'
 
 version Mesh::VERSION
 Mesh.logger = Logger.new(STDOUT)
 @logger = Mesh.logger
+
+
+config_filename = '.mesh.rc'
+
+if ARGV.any?
+  host_alias = ARGV[0]
+  if File.exist? File.join(File.expand_path(ENV['HOME']),".mesh.#{host_alias}.rc")
+    config_filename = ".mesh.#{host_alias}.rc"
+    Mesh.logger.info "Using host specific config file ~/.mesh.#{host_alias}.rc"
+    ARGV.shift
+  else
+    Mesh.logger.info "No site specific config file found, using default ~/#{config_filename}."
+  end
+end
+
+config_file config_filename
+
+program_desc 'VMWare VSphere command suite interface'
+program_long_desc 'A command suite to allow users to manage VMWare virtual machines remotely via the command line'
 
 desc 'Ignore SSL Certificate errors in connection'
 switch [:insecure]
