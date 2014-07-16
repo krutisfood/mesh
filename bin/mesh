@@ -19,9 +19,10 @@ Mesh.logger = Logger.new(STDOUT)
 
 config_filename = '.mesh.rc'
 
-if ARGV.any?
+if ARGV.count >= 2
   host_alias = ARGV[0]
-  if File.exist? File.join(File.expand_path(ENV['HOME']),".mesh.#{host_alias}.rc")
+  init_config = (ARGV.last == 'initconfig')
+  if init_config or File.exist? File.join(File.expand_path(ENV['HOME']),".mesh.#{host_alias}.rc")
     config_filename = ".mesh.#{host_alias}.rc"
     Mesh.logger.info "Using host specific config file ~/.mesh.#{host_alias}.rc"
     ARGV.shift
@@ -61,6 +62,7 @@ flag [:r,:resource_pool]
 
 commands_from 'mesh/commands'
 
+=begin
 desc 'TODO Describe list here'
 arg_name 'TODO Describe arguments to list here'
 command :list do |c|
@@ -69,6 +71,7 @@ command :list do |c|
     puts "recursive by default, list the folders, vms"
   end
 end
+=end
 
 desc 'TODO Describe destroy here'
 arg_name 'Describe arguments to destroy here'

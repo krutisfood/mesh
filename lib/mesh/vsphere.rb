@@ -17,6 +17,25 @@ module Mesh
       Machine::get(self, datacenter, machine_name)
     end
 
+    def clone_machine(vm_type, vm_target, default_vm_folder, machine_options)
+      Mesh::template.has_key? vm_type.to_sym or raise "unknown machine type #{vm_type}, known types are #{Mesh::template.keys.to_s}"
+      template = Mesh::template[vm_type.to_sym]
+      vm_dest = VSphere.parse_vm_target vm_target, default_vm_folder
+      vm_template = get_machine(template[:name], options[:datacenter])
+      # Refactor & pass in options with the get or alternatively add a get and set method
+      spec = get_custom_spec(template[:spec])
+      spec.destination_ip_address = machine_options[:ip_address] if machine_options[:ip_address]
+      pool = get_resource_pool(options[:resource_pool], options[:datacenter])
+      datacenter = get_datacenter(options[:datacenter])
+      datastore = get_datastore(machine_options[:datastore], datacenter)
+      raise "No datastore found matching #{machine_options[:datastore]}. Exiting." if datastore.nil?
+      Mesh::logger.debug "Got datastore named #{datastore.name} with free space #{datastore.free_space}."
+      Mesh::logger.debug "Creating vm in folder #{vm_dest[:folder]} with name #{vm_dest[:name]}."
+      folder = get_folder(vm_dest[:folder], options[:datacenter])
+      Mesh::logger.debug "Using folder #{folder.to_s}."
+      vm_template.clone_to(vm_dest[:name], folder, datastore, spec, pool)
+    end
+
     def get_custom_spec(name)
       spec_mgr = @vim.serviceContent.customizationSpecManager
       CustomSpec::get(spec_mgr, name)
@@ -40,5 +59,38 @@ module Mesh
     def root_folder
       @vim.serviceInstance.content.rootFolder
     end
+
+    def vm_root_folder
+      @vim.serviceInstance.content.rootFolder.traverse(options[:datacenter]).vmFolder
+    end
+
+    # From here https://github.com/rlane/rbvmomi/blob/master/lib/rbvmomi/vim/Folder.rb
+    def get_folder(path, datacenter_name)
+      Mesh::logger.debug "Looking for folder #{path}."
+      if path.to_s == '/'
+        Mesh::logger.debug "Returning root path"
+        #folder = root_folder.traverse(datacenter_name).vmFolder
+        folder = vm_root_folder
+      else
+        Mesh::logger.debug "Traverse! Searching for #{path}"
+        #folder = root_folder.traverse(datacenter_name).vmFolder.traverse(path)
+        folder = vm_root_folder.traverse(path)
+      end
+      folder
+      #path.to_s == '/' ? root_folder : root_folder.traverse(path)
+    end
+
+    private
+      def self.parse_vm_target(vm_target, default_vm_path = '/')
+        vm_details = vm_target.match(/(.+)\/(.+)/)
+        vm = Hash.new
+        vm[:folder] = default_vm_path
+        vm[:name]   = vm_target
+        if vm_details
+          vm[:folder] = vm_details[1]
+          vm[:name]   = vm_details[2]
+        end
+        vm
+      end
   end
 end

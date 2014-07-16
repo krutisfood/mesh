@@ -8,6 +8,7 @@ class VSphereTest < Test::Unit::TestCase
 
   def setup
     @mock_vim = Object.new
+    #@mock_vim = mock RbVmomi::VIM
     VIM.stubs(:connect).returns(@mock_vim)
     @mock_connection_options = Hash.new
     Mesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)

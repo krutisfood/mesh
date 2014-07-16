@@ -1,49 +1,77 @@
-## Command suite for VMWare
+# Command suite for VMWare
 
 ## What is Mesh?
 
-Mesh is a Command Suite to make managing VMWare components easier and possible without leaving your local machine.
+Mesh is a Command Suite (think git) to make managing VMWare components easier and possible without leaving your local machine.
 
-##THIS IS PRE-ALPHA!!!
+##THIS IS ALPHA!
 
-Mesh is currently Pre-Alpha, hence the 0-dot version; it is susceptible to methods, classes and modules being renamed, added or deleted.
+Mesh is currently Alpha, hence the 0-dot version; it is susceptible to methods, classes and modules being renamed, added or deleted.
 
 ## Setup
 
-  mesh <options here> initcfg
+  get the gem (if it exists) or just clone the repo if it doesn't.  If working in the repo prefix all commands with "bundle exec "
+
+  mesh <options_here> initconfig
+
+To setup multiple connections use the form
+
+  mesh <site_name> <options_here> initconfig
 
 ## Usage
 
-To Clone a VM from a template
+### Help
 
-  mesh create windows myvmname [--ip_address='<ip_address>'] --datastore='DOES_PART_MATCH'
+To get help
+  
+  mesh --help
 
-  mesh -d 'datacenter' -r 'my_resource_pool' --host vsphere.mydom.com.au create linux 'folder/vmware' --ip_address='10.0.0.2' --datastore='DATASTORE'
+Help on a specific command
+
+  mesh create --help
+
+### Create or clone
+
+To Clone VM(s) from a template, assigning ips starting at <ip_address>
+
+  mesh [host_alias] create windows my_vm_name1,my_vm_name2 [--ip_address='<ip_address>'] --datastore='DOES_PART_MATCH [--folder='DESTINATION_FOLDER']
+
+  mesh [host_alias] -d 'datacenter' -r 'my_resource_pool' --host vsphere.mydom.com.au create linux 'folder/vmware' --ip_address='10.0.0.2' --datastore='DATASTORE'
+
+### Power
 
 To change the power state of a VM
 
-  mesh power 'folder/machine_name' on
+  mesh [host_alias] power 'folder/machine_name' on
 
-  mesh power 'folder/machine_name' off
+  mesh [host_alias] power 'folder/machine_name' off
 
-  mesh power 'folder/machine_name' destroy
+  mesh [host_alias] power 'folder/machine_name' destroy
+
+### List
+
+To list all vms and directories on default host
+
+  mesh [host_alias] list|ls|dir
+
+List directories only
+
+  mesh [host_alias] list|ls|dir -d 
 
 ## TODOs
 
-* General
+* List 
 
-  * Define multiple environments in config file, switchable like 'mesh <dc> <action> ...'
-
-  * Server defaults in external configuration, e.g. Symlink to config/shared/ or etcd
-
-* Create
-
-  * Move to destination folder (currently stays in Templates dir)
-
-  * Select datastore based on most free available space
+  * Non-recursive listing
 
 * Power
   
   * Query & display state after operation completes
+
+* General
+
+  * Performance enhancements would be nice
+
+  * Server defaults in external configuration, e.g. Symlink to config/shared/ or etcd
 
 * Mesh everything else :-)
