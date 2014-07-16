@@ -64,20 +64,9 @@ module Mesh
       @vim.serviceInstance.content.rootFolder.traverse(options[:datacenter]).vmFolder
     end
 
-    # From here https://github.com/rlane/rbvmomi/blob/master/lib/rbvmomi/vim/Folder.rb
     def get_folder(path, datacenter_name)
       Mesh::logger.debug "Looking for folder #{path}."
-      if path.to_s == '/'
-        Mesh::logger.debug "Returning root path"
-        #folder = root_folder.traverse(datacenter_name).vmFolder
-        folder = vm_root_folder
-      else
-        Mesh::logger.debug "Traverse! Searching for #{path}"
-        #folder = root_folder.traverse(datacenter_name).vmFolder.traverse(path)
-        folder = vm_root_folder.traverse(path)
-      end
-      folder
-      #path.to_s == '/' ? root_folder : root_folder.traverse(path)
+      path.to_s == '/' ? vm_root_folder : vm_root_folder.traverse(path)
     end
 
     private

@@ -8,14 +8,12 @@ module Mesh
 
     def initialize(vm)
       Mesh::logger.debug "New machine wrapper object with #{vm}"
-      @vm = vm    #root_folder.traverse @name, RbVmomi::VIM::VirtualMachine
+      @vm = vm
     end
 
     def self.get(vs_manager, datacenter_name, name)
       Mesh::logger.debug "looking for vm #{name} at dc #{datacenter_name}."
-      root_folder = vs_manager.root_folder
-      Mesh::logger.debug "not sure we found the root folder champ." unless root_folder
-      vm = root_folder.traverse(datacenter_name).vmFolder.traverse(name)
+      vm = vs_manager.vm_root_folder.traverse(name)
       vm or raise "unable to find machine #{name} at #{datacenter_name}"
       Machine.new vm 
     end
@@ -59,10 +57,8 @@ module Mesh
       clone_spec.customization = custom_spec.spec if custom_spec
       Mesh::logger.debug "Custom spec #{custom_spec} supplied."
       Mesh::logger.warn "Destination folder location not yet tested, will the new vm will be found in the source folder?"
-      #vm_folder = @vm.parent
-      #vm_folder = vm_manager.get_folder(vm_folder)
+
       Machine.new(@vm.CloneVM_Task(:folder => vm_folder, :name => vm_name, :spec => clone_spec).wait_for_completion)
-      #Machine.new(@vm.CloneVM_Task(:folder => vm_folder, :name => vm_name, :spec => clone_spec))
     end
   end
 end
