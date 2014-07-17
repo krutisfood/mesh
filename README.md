@@ -22,6 +22,11 @@ To setup multiple connections use the form
   mesh <site_name> <options_here> initconfig
 ```
 
+Edit the config file to set your available image types and the corresponding vm template to use in cloning, any relevant custom specs.  One day this will move externally, perhaps etcd and/or a config file able to be specified on command line.
+```
+  lib/mesh/server_defaults.rb 
+```
+
 ## Usage
 
 ### Help
@@ -43,7 +48,7 @@ Help on a specific command
 To Clone VM(s) from a template, assigning ips starting at <ip_address>, datastore will use a datastore with exact match, if none exists it will find all datastores which contain this string and use the one with the most free space.
 
 ```
-  mesh [host_alias] create windows my_vm_name1,my_vm_name2 [--ip_address='<ip_address>'] --datastore='SEARCH_STRING' [--folder='DESTINATION_FOLDER']
+  mesh [host_alias] create my_vm_name1,my_vm_name2 <type> [--ip_address='<ip_address>'] --datastore='SEARCH_STRING' [--folder='DESTINATION_FOLDER']
 ```
 e.g. for the above, if datastores exist with names FIRST_SEARCH_STRING, ANOTHER_SEARCH_STRING it will find both (as they both contain "SEARCH_STRING") then use the one with the most free space.
 
