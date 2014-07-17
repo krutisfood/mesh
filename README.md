@@ -94,3 +94,10 @@ List directories only
   * Server defaults in external configuration, e.g. Symlink to config/shared/ or etcd
 
 * Mesh everything else :-)
+
+
+## Copyright
+
+Copyright (c) 2014 Kurt Gardiner. See LICENSE.txt for further details.
+
+
