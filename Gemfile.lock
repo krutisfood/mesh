@@ -52,8 +52,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aruba
+  aruba (= 0.5.4)
   mesh!
   mocha (= 1.0.0)
-  rake
-  rdoc
+  rake (= 10.3.1)
+  rdoc (= 4.1.1)
