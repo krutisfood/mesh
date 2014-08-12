@@ -1,4 +1,5 @@
 
+desc 'change the power state of the vm'
 arg_name 'vm_name [on|off|reset|suspend|destroy]'
 
 command :power do |c|

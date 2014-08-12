@@ -3,6 +3,8 @@ require 'gli'
 begin # XXX: Remove this begin/rescue before distributing your app
 require 'mesh'
 require 'logger'
+require 'highline/import'
+
 rescue LoadError
   STDERR.puts "In development, you need to use `bundle exec bin/mesh` to run your app"
   STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
@@ -21,7 +23,7 @@ config_filename = '.mesh.rc'
 
 if ARGV.count >= 2
   host_alias = ARGV[0]
-  init_config = (ARGV.include? 'initconfig')
+  init_config = (ARGV.last == 'initconfig')
   if init_config or File.exist? File.join(File.expand_path(ENV['HOME']),".mesh.#{host_alias}.rc")
     config_filename = ".mesh.#{host_alias}.rc"
     Mesh.logger.info "Using host specific config file ~/.mesh.#{host_alias}.rc"
@@ -40,7 +42,6 @@ desc 'Ignore SSL Certificate errors in connection'
 switch [:insecure]
 
 desc 'VCenter username'
-#default_value 'the default'
 arg_name 'user'
 flag [:u,:user]
 
@@ -61,17 +62,6 @@ arg_name 'vcenter resource pool'
 flag [:r,:resource_pool]
 
 commands_from 'mesh/commands'
-
-=begin
-desc 'TODO Describe list here'
-arg_name 'TODO Describe arguments to list here'
-command :list do |c|
-  c.action do |global_options,options,args|
-    puts "list command ran"
-    puts "recursive by default, list the folders, vms"
-  end
-end
-=end
 
 desc 'TODO Describe destroy here'
 arg_name 'Describe arguments to destroy here'
@@ -103,6 +93,13 @@ pre do |global,command,options,args|
   # chosen command
   # Use skips_pre before a command to skip this block
   # on that command only
+  if global[:password].to_s == ''
+    the_super_secret_password = ask("Enter Password Please:") {|q| q.echo = false}
+    global['p'] = the_super_secret_password
+    global[:p] = the_super_secret_password
+    global['password'] = the_super_secret_password
+    global[:password] = the_super_secret_password
+  end
   true
 end
 

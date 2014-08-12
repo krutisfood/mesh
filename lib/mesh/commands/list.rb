@@ -1,3 +1,7 @@
+
+desc 'list directory contents'
+arg_name '[dir]'
+
 command [:list,:ls,:dir] do |c|
   c.desc 'list directory entries instead of contents, and do not dereference symbolic links'
   c.switch [:d, :directory]

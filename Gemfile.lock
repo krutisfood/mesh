@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    mesh (0.1.0)
+    mesh (0.1.1)
       gli (= 2.9.0)
-      highline (~> 1.6.21)
+      highline (~> 1.6)
       logger (= 1.2.8)
       nokogiri (= 1.5.5)
       rbvmomi (= 1.8.1)

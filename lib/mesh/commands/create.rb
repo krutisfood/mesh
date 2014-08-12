@@ -1,6 +1,6 @@
 require 'ipaddr'
 
-desc 'Create a new virtual machine'
+desc 'create a new virtual machine'
 arg_name 'folder/name[,folder/name_of_second_machine] type'
 
 command :create do |c|
