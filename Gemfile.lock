@@ -1,10 +1,11 @@
 PATH
   remote: .
   specs:
-    mesh (0.0.1)
+    mesh (0.1.0)
       gli (= 2.9.0)
       highline (~> 1.6.21)
       logger (= 1.2.8)
+      nokogiri (= 1.5.5)
       rbvmomi (= 1.8.1)
 
 GEM
@@ -32,13 +33,11 @@ GEM
     json (1.8.1)
     logger (1.2.8)
     metaclass (0.0.4)
-    mini_portile (0.5.3)
     mocha (1.0.0)
       metaclass (~> 0.0.1)
     multi_json (1.10.0)
     multi_test (0.1.1)
     nokogiri (1.5.5)
-      mini_portile (~> 0.5.0)
     rake (10.3.1)
     rbvmomi (1.8.1)
       builder

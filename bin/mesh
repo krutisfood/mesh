@@ -21,7 +21,7 @@ config_filename = '.mesh.rc'
 
 if ARGV.count >= 2
   host_alias = ARGV[0]
-  init_config = (ARGV.last == 'initconfig')
+  init_config = (ARGV.include? 'initconfig')
   if init_config or File.exist? File.join(File.expand_path(ENV['HOME']),".mesh.#{host_alias}.rc")
     config_filename = ".mesh.#{host_alias}.rc"
     Mesh.logger.info "Using host specific config file ~/.mesh.#{host_alias}.rc"
