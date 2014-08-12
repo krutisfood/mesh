@@ -84,6 +84,14 @@ List directories only
 
 ## TODOs
 
+* Sort out problem with upstream rbvmomi/nogokiri
+
+  * Related bug here https://github.com/nsidc/vagrant-vsphere/issues/28
+
+* Create
+
+  * Don't create new vm if less than 10% space
+
 * List 
 
   * Non-recursive listing

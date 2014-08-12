@@ -64,7 +64,7 @@ module Mesh
       @vim.serviceInstance.content.rootFolder.traverse(options[:datacenter]).vmFolder
     end
 
-    def get_folder(path, datacenter_name)
+    def get_folder(path, datacenter_name = @options[:datacenter])
       Mesh::logger.debug "Looking for folder #{path}."
       path.to_s == '/' ? vm_root_folder : vm_root_folder.traverse(path)
     end

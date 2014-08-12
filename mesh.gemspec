@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('gli','2.9.0')
   s.add_runtime_dependency('logger','1.2.8')
   s.add_runtime_dependency('rbvmomi','1.8.1')
+  s.add_runtime_dependency('highline','~> 1.6.21')
 end
