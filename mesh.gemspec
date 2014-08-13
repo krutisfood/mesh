@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split("
 ")
   s.require_paths << 'lib'
+  s.require_paths << 'vendor'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.rdoc','mesh.rdoc']
   s.rdoc_options << '--title' << 'mesh' << '--main' << 'README.rdoc' << '-ri'
@@ -24,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('mocha','1.0.0')
   s.add_runtime_dependency('gli','2.9.0')
   s.add_runtime_dependency('logger','1.2.8')
-  s.add_runtime_dependency('rbvmomi','1.8.1')
+  s.add_runtime_dependency('rbvmomi','1.8.2')
   s.add_runtime_dependency('highline','~> 1.6')
-  s.add_runtime_dependency('nokogiri','1.5.5')
+  s.add_runtime_dependency('nokogiri','~> 1.6')
 end

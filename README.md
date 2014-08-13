@@ -10,6 +10,10 @@ Mesh is currently Alpha, hence the 0-dot version; it is susceptible to methods, 
 
 ## Setup
 
+* Rbvmomi hack required for nokogiri breaking change in 1.6.1
+
+  * https://github.com/vmware/rbvmomi/pull/32
+
 * get the gem (if it exists) or just clone the repo if it doesn't.  If working in the repo prefix all commands with "bundle exec "
 
 ```

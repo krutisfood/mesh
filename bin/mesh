@@ -94,7 +94,7 @@ pre do |global,command,options,args|
   # Use skips_pre before a command to skip this block
   # on that command only
   if global[:password].to_s == ''
-    the_super_secret_password = ask("Enter Password Please:") {|q| q.echo = false}
+    the_super_secret_password = ask("Enter Password for #{global[:user]} please:") {|q| q.echo = false}
     global['p'] = the_super_secret_password
     global[:p] = the_super_secret_password
     global['password'] = the_super_secret_password
