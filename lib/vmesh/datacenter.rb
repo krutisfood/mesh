@@ -1,4 +1,4 @@
-module Mesh
+module Vmesh
   class Datacenter
     attr_accessor :dc
     def initialize(datacenter) 
@@ -12,7 +12,7 @@ module Mesh
 
     # non wrapped object, gasp!
     def self.find_pool(vim, name, dcname = nil)
-      Mesh::logger.debug "Looking for datacenter pool #{name} in datacenter named #{dcname}."
+      Vmesh::logger.debug "Looking for datacenter pool #{name} in datacenter named #{dcname}."
       dc = vim.serviceInstance.find_datacenter(dcname) or abort "datacenter not found"
       dc = Datacenter.get(vim, nil).dc
       baseEntity = dc.hostFolder

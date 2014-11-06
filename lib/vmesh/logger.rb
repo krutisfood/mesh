@@ -1,4 +1,4 @@
-module Mesh
+module Vmesh
   class <<self
     attr_accessor :logger
   end

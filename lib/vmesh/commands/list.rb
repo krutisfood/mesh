@@ -11,16 +11,16 @@ command [:list,:ls,:dir] do |c|
 
   c.action do |global_options,options,args|
     pwd = ARGV.shift if ARGV.any?
-    vm_manager = Mesh::VSphere.new global_options
+    vm_manager = Vmesh::VSphere.new global_options
     show_directories_only = options[:directory]
     folder = pwd.nil? ? vm_manager.vm_root_folder : vm_manager.get_folder(pwd)
     raise "Folder #{pwd} not found, exiting" if folder.to_s == ''
-    Mesh::logger.debug "Searching folder #{folder.name}."
-    Mesh::list_under folder,show_directories_only,options[:recursive],"/#{folder.name}"
+    Vmesh::logger.debug "Searching folder #{folder.name}."
+    Vmesh::list_under folder,show_directories_only,options[:recursive],"/#{folder.name}"
   end
 end
 
-module Mesh
+module Vmesh
   def self.list_under(folder, show_directories_only, recurse = false, currently_in = '')
      currently_in = '' if currently_in == '/vm'
      folder.childEntity.each do |x|

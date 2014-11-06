@@ -1,18 +1,18 @@
 require 'rbvmomi'
 require 'logger'
 
-module Mesh
+module Vmesh
   class Machine
     attr_accessor :name, :vm
     @@states = {'on' => 'PowerOnVM_Task', 'off' => 'PowerOffVM_Task', 'reset' => 'ResetVM_Task', 'suspend' => 'SuspendVM_Task', 'destroy' => 'Destroy_Task' }
 
     def initialize(vm)
-      Mesh::logger.debug "New machine wrapper object with #{vm}"
+      Vmesh::logger.debug "New machine wrapper object with #{vm}"
       @vm = vm
     end
 
     def self.get(vs_manager, datacenter_name, name)
-      Mesh::logger.debug "looking for vm #{name} at dc #{datacenter_name}."
+      Vmesh::logger.debug "looking for vm #{name} at dc #{datacenter_name}."
       vm = vs_manager.vm_root_folder.traverse(name)
       vm or raise "unable to find machine #{name} at #{datacenter_name}"
       Machine.new vm 
@@ -46,7 +46,7 @@ module Mesh
     end
 
     def clone_to (vm_name, vm_folder = @vm.parent, datastore = nil, custom_spec = nil, pool = nil)
-      Mesh::logger.info "Cloning #{@name} to a new vm named #{vm_name} in folder #{vm_folder}."
+      Vmesh::logger.info "Cloning #{@name} to a new vm named #{vm_name} in folder #{vm_folder}."
       ds = datastore.ds unless datastore.nil?
       relocateSpec = RbVmomi::VIM.VirtualMachineRelocateSpec(:datastore    => ds,
                                                              :diskMoveType => :moveChildMostDiskBacking,
@@ -55,8 +55,8 @@ module Mesh
                                                         :powerOn  => false,
                                                         :template => false)
       clone_spec.customization = custom_spec.spec if custom_spec
-      Mesh::logger.debug "Custom spec #{custom_spec} supplied."
-      Mesh::logger.warn "Destination folder location not yet tested, will the new vm will be found in the source folder?"
+      Vmesh::logger.debug "Custom spec #{custom_spec} supplied."
+      Vmesh::logger.warn "Destination folder location not yet tested, will the new vm will be found in the source folder?"
 
       Machine.new(@vm.CloneVM_Task(:folder => vm_folder, :name => vm_name, :spec => clone_spec).wait_for_completion)
     end

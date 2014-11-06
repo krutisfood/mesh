@@ -17,8 +17,9 @@ class VSphereTest < Test::Unit::TestCase
   def teardown
   end
 
-  def test_root_folder_gets_from_vim
-    vsphere_vm_manager = VSphere.new(@mock_connection_options)
+  def test_bulk_creates
+    #vsphere_vm_manager = VSphere.new(@mock_connection_options)
+    vsphere_vm_manager = mock Vmesh::VSphere
     mock_root_folder = Object.new
     mock_content = Object.new
     mock_content.expects(:rootFolder).returns(mock_root_folder)

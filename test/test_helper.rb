@@ -8,7 +8,7 @@ require 'test/unit'
 # Add test libraries you want to use here, e.g. mocha
 require 'mocha/mini_test'
 =end
-require_relative '../lib/mesh.rb'
+require_relative '../lib/vmesh.rb'
 require 'mocha/setup'
 require 'mocha/test_unit'
 

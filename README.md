@@ -1,12 +1,12 @@
 # Command suite for VMWare
 
-## What is Mesh?
+## What is Vmesh?
 
-Mesh is a Command Suite (think git) to make managing VMWare components easier and possible without leaving your local machine.
+Vmesh is a Command Suite (think git) to make managing VMWare components easier and possible without leaving your local machine.
 
 ##THIS IS ALPHA!
 
-Mesh is currently Alpha, hence the 0-dot version; it is susceptible to methods, classes and modules being renamed, added or deleted.
+Vmesh is currently Alpha, hence the 0-dot version; it is susceptible to methods, classes and modules being renamed, added or deleted.
 
 ## Setup
 
@@ -17,18 +17,18 @@ Mesh is currently Alpha, hence the 0-dot version; it is susceptible to methods, 
 * get the gem (if it exists) or just clone the repo if it doesn't.  If working in the repo prefix all commands with "bundle exec "
 
 ```
-  mesh <options_here> initconfig
+  vmesh <options_here> initconfig
 ```
 
 To setup multiple connections use the form
 
 ```
-  mesh <site_name> <options_here> initconfig
+  vmesh <site_name> <options_here> initconfig
 ```
 
 Edit the config file to set your available image types and the corresponding vm template to use in cloning, any relevant custom specs.  One day this will move externally, perhaps etcd and/or a config file able to be specified on command line.
 ```
-  lib/mesh/server_defaults.rb 
+  lib/vmesh/server_defaults.rb 
 ```
 
 ## Usage
@@ -38,13 +38,13 @@ Edit the config file to set your available image types and the corresponding vm 
 To get help
   
 ```
-  mesh --help
+  vmesh --help
 ```
 
 Help on a specific command
 
 ```
-  mesh create --help
+  vmesh create --help
 ```
 
 ### Create or clone
@@ -52,7 +52,7 @@ Help on a specific command
 To Clone VM(s) from a template, assigning ips starting at <ip_address>, datastore will use a datastore with exact match, if none exists it will find all datastores which contain this string and use the one with the most free space.
 
 ```
-  mesh [host_alias] create my_vm_name1,my_vm_name2 <type> [--ip_address='<ip_address>'] --datastore='SEARCH_STRING' [--folder='DESTINATION_FOLDER']
+  vmesh [host_alias] create my_vm_name1,my_vm_name2 <type> [--ip_address='<ip_address>'] --datastore='SEARCH_STRING' [--folder='DESTINATION_FOLDER']
 ```
 e.g. for the above, if datastores exist with names FIRST_SEARCH_STRING, ANOTHER_SEARCH_STRING it will find both (as they both contain "SEARCH_STRING") then use the one with the most free space.
 
@@ -61,15 +61,15 @@ e.g. for the above, if datastores exist with names FIRST_SEARCH_STRING, ANOTHER_
 To change the power state of a VM
 
 ```
-  mesh [host_alias] power 'folder/machine_name' on
+  vmesh [host_alias] power 'folder/machine_name' on
 ```
 
 ```
-  mesh [host_alias] power 'folder/machine_name' off
+  vmesh [host_alias] power 'folder/machine_name' off
 ```
 
 ```
-  mesh [host_alias] power 'folder/machine_name' destroy
+  vmesh [host_alias] power 'folder/machine_name' destroy
 ```
 
 ### List
@@ -77,13 +77,13 @@ To change the power state of a VM
 To list all vms and directories on default host
 
 ```
-  mesh [host_alias] list|ls|dir
+  vmesh [host_alias] list|ls|dir
 ```
 
 List directories only
 
 ```
-  mesh [host_alias] list|ls|dir -d 
+  vmesh [host_alias] list|ls|dir -d 
 ```
 
 ## TODOs
@@ -110,7 +110,7 @@ List directories only
 
   * Server defaults in external configuration, e.g. Symlink to config/shared/ or etcd
 
-* Mesh everything else :-)
+* Vmesh everything else :-)
 
 
 ## Copyright

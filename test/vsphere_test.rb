@@ -2,7 +2,7 @@ require 'test_helper'
 require 'mocha/test_unit'
 
 include RbVmomi
-include Mesh
+include Vmesh
 
 class VSphereTest < Test::Unit::TestCase
 
@@ -10,7 +10,7 @@ class VSphereTest < Test::Unit::TestCase
     @mock_vim = Object.new
     VIM.stubs(:connect).returns(@mock_vim)
     @mock_connection_options = Hash.new
-    Mesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)
+    Vmesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)
   end
 
   def teardown

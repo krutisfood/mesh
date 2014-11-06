@@ -1,6 +1,6 @@
 require 'rbvmomi'
 
-module Mesh
+module Vmesh
   class Datastore
     attr_accessor :ds
     def initialize(ds)
@@ -8,19 +8,19 @@ module Mesh
     end
 
     def self.get(vim, name, datacenter)
-      Mesh::logger.debug "Getting datastore named #{name} at datacenter #{datacenter.name}." 
+      Vmesh::logger.debug "Getting datastore named #{name} at datacenter #{datacenter.name}." 
       stores = self.get_all(vim, datacenter).select{ |ds| ds.name == name }
       if stores.nil? or stores.empty?
-        Mesh::logger.info "No exact match found, searching for partial match"
+        Vmesh::logger.info "No exact match found, searching for partial match"
         stores = self.get_all(vim, datacenter).select{ |ds| ds.name.include? name }
-        Mesh::logger.debug "Found #{stores.count} datastores."
-        Mesh::logger.debug "#{stores.map{|ds| "Name #{ds.name}, free space #{ds.free_space}"}}"
+        Vmesh::logger.debug "Found #{stores.count} datastores."
+        Vmesh::logger.debug "#{stores.map{|ds| "Name #{ds.name}, free space #{ds.free_space}"}}"
       end
       stores.sort_by{ |ds| ds.free_space }.reverse.first
     end
 
     def self.get_all(vim, datacenter)
-      Mesh::logger.debug "get_all datastores at #{datacenter.name}."
+      Vmesh::logger.debug "get_all datastores at #{datacenter.name}."
       vim.serviceContent.viewManager.CreateContainerView({
         :container  => datacenter.dc.datastoreFolder,
         :type       => ["Datastore"],

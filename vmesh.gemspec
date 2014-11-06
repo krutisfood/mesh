@@ -1,8 +1,8 @@
 # Ensure we require the local version and not one we might have installed already
-require File.join([File.dirname(__FILE__),'lib','mesh','version.rb'])
+require File.join([File.dirname(__FILE__),'lib','vmesh','version.rb'])
 Gem::Specification.new do |s| 
-  s.name        = 'mesh'
-  s.version     = Mesh::VERSION
+  s.name        = 'vmesh'
+  s.version     = Vmesh::VERSION
   s.licenses    = ['MIT']
   s.author      = 'Kurt Gardiner'
   s.email       = 'k.a.gardiner@gmail.com'
@@ -14,10 +14,10 @@ Gem::Specification.new do |s|
 ")
   s.require_paths << 'lib'
   s.has_rdoc = true
-  s.extra_rdoc_files = ['README.rdoc','mesh.rdoc']
-  s.rdoc_options << '--title' << 'mesh' << '--main' << 'README.rdoc' << '-ri'
+  s.extra_rdoc_files = ['README.rdoc','vmesh.rdoc']
+  s.rdoc_options << '--title' << 'vmesh' << '--main' << 'README.rdoc' << '-ri'
   s.bindir = 'bin'
-  s.executables << 'mesh'
+  s.executables << 'vmesh'
   s.add_development_dependency('rake','10.3.1')
   s.add_development_dependency('rdoc','4.1.1')
   s.add_development_dependency('aruba','0.5.4')

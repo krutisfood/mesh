@@ -21,25 +21,25 @@ command :create do |c|
     vm_targets = ARGV.shift
     vm_type = ARGV.shift
     @logger.debug "Create invoked to create #{vm_targets} of type #{vm_type}\n\t#{global_options[:host]}\n\t#{options}\n\t#{args}."
-    Mesh::template.has_key? vm_type.to_sym or raise "unknown machine type #{vm_type}, known types are #{Mesh::template.keys.to_s}"
+    Vmesh::template.has_key? vm_type.to_sym or raise "unknown machine type #{vm_type}, known types are #{Vmesh::template.keys.to_s}"
 
     ip_address = options[:ip_address]
     machine_options = {}
-    vm_manager = Mesh::VSphere.new global_options
+    vm_manager = Vmesh::VSphere.new global_options
     #default_vm_folder = vm_manager.get_folder(options[:folder]) if options[:folder]
     default_vm_folder = options[:folder] || '/'
     vm_targets.split(',').each do |vm_target|
       machine_options[:ip_address] = ip_address if ip_address.to_s != ''
       machine_options[:datastore] = options[:datastore] if options[:datastore].to_s != ''
       new_vm = vm_manager.clone_machine(vm_type, vm_target, default_vm_folder, machine_options)
-      Mesh.logger.info "#{vm_type}, #{vm_target}, #{machine_options}"
+      Vmesh.logger.info "#{vm_type}, #{vm_target}, #{machine_options}"
       ip_address = IPAddr.new(ip_address).succ.to_s if ip_address.to_s != ''
-      Mesh.logger.warn "Check #{vm_target}, nil vm returned..." if new_vm.nil?
+      Vmesh.logger.warn "Check #{vm_target}, nil vm returned..." if new_vm.nil?
     end
   end
 end
 
-module Mesh
+module Vmesh
   def self.parse_vm_target(vm_target)
     vm_details = vm_target.match(/(.+)\/(.+)/)
     vm = Hash.new

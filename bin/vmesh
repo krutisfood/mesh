@@ -1,35 +1,35 @@
 #!/usr/bin/env ruby
 require 'gli'
 begin # XXX: Remove this begin/rescue before distributing your app
-require 'mesh'
+require 'vmesh'
 require 'logger'
 require 'highline/import'
 
 rescue LoadError
-  STDERR.puts "In development, you need to use `bundle exec bin/mesh` to run your app"
+  STDERR.puts "In development, you need to use `bundle exec bin/vmesh` to run your app"
   STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
-  STDERR.puts "Feel free to remove this message from bin/mesh now"
+  STDERR.puts "Feel free to remove this message from bin/vmesh now"
   exit 64
 end
 
 include GLI::App
 
-version Mesh::VERSION
-Mesh.logger = Logger.new(STDOUT)
-@logger = Mesh.logger
+version Vmesh::VERSION
+Vmesh.logger = Logger.new(STDOUT)
+@logger = Vmesh.logger
 
 
-config_filename = '.mesh.rc'
+config_filename = '.vmesh.rc'
 
 if ARGV.count >= 2
   host_alias = ARGV[0]
   init_config = (ARGV.last == 'initconfig')
-  if init_config or File.exist? File.join(File.expand_path(ENV['HOME']),".mesh.#{host_alias}.rc")
-    config_filename = ".mesh.#{host_alias}.rc"
-    Mesh.logger.info "Using host specific config file ~/.mesh.#{host_alias}.rc"
+  if init_config or File.exist? File.join(File.expand_path(ENV['HOME']),".vmesh.#{host_alias}.rc")
+    config_filename = ".vmesh.#{host_alias}.rc"
+    Vmesh.logger.info "Using host specific config file ~/.vmesh.#{host_alias}.rc"
     ARGV.shift
   else
-    Mesh.logger.info "No site specific config file found, using default ~/#{config_filename}."
+    Vmesh.logger.info "No site specific config file found, using default ~/#{config_filename}."
   end
 end
 
@@ -61,7 +61,7 @@ desc 'VCenter Resource Pool'
 arg_name 'vcenter resource pool'
 flag [:r,:resource_pool]
 
-commands_from 'mesh/commands'
+commands_from 'vmesh/commands'
 
 desc 'TODO Describe destroy here'
 arg_name 'Describe arguments to destroy here'

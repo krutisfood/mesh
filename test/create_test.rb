@@ -1,18 +1,18 @@
 require 'test_helper'
-require 'mesh/commands/create_helpers'
+require 'vmesh/commands/create_helpers'
 
 class CreateTest < Test::Unit::TestCase
 #class CreateTest < Test::Test
 
   def setup
-    Mesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)
+    Vmesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)
   end
 
   def teardown
   end
 
   def test_parse_vm_target_with_folder
-    #vm_details = Mesh::parse_vm_target("dummy_folder/dummy_vm_name")
+    #vm_details = Vmesh::parse_vm_target("dummy_folder/dummy_vm_name")
     #assert vm_details.is_hash?
     assert true
   end

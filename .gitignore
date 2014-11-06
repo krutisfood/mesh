@@ -2,4 +2,5 @@
 *swp
 *idea
 *.swo
-mesh*.gem
+vmesh*.gem
+vendor

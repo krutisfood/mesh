@@ -1,12 +1,12 @@
 require 'test_helper'
 
 include RbVmomi
-include Mesh
+include Vmesh
 
 class DatastoreTest < Test::Unit::TestCase
 
   def setup
-    Mesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)
+    Vmesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)
   end
 
   def teardown
@@ -20,9 +20,9 @@ class DatastoreTest < Test::Unit::TestCase
     fake_ds2.stubs(:name => "BRAIN_STORE", :free_space => 200)
     stores = [fake_ds1, matching_fake, fake_ds2]
     dc.stubs(:name => 'fake_dc')
-    Mesh::Datastore.stubs(:get_all => stores)
+    Vmesh::Datastore.stubs(:get_all => stores)
 
-    store = Mesh::Datastore.get vim,'GRAIN_STORE_1',dc
+    store = Vmesh::Datastore.get vim,'GRAIN_STORE_1',dc
 
     assert_equal matching_fake,store
   end
@@ -35,9 +35,9 @@ class DatastoreTest < Test::Unit::TestCase
     fake_ds2.stubs(:name => "BRAIN_STORE", :free_space => 20)
     stores = [fake_ds1, matching_fake, fake_ds2]
     dc.stubs(:name => 'fake_dc')
-    Mesh::Datastore.stubs(:get_all => stores)
+    Vmesh::Datastore.stubs(:get_all => stores)
 
-    store = Mesh::Datastore.get vim,'RAIN_STORE',dc
+    store = Vmesh::Datastore.get vim,'RAIN_STORE',dc
     
     assert_equal matching_fake,store
   end

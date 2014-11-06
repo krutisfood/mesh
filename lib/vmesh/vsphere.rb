@@ -2,11 +2,11 @@ require 'rbvmomi'
 require 'logger'
 
 # VM Manager Class to hand all things VSphere
-module Mesh
+module Vmesh
   class VSphere
     attr_accessor :vim, :options
     def initialize(connection_options)
-      Mesh::logger.debug "Opening connection to #{connection_options['host']}"
+      Vmesh::logger.debug "Opening connection to #{connection_options['host']}"
       @vim = RbVmomi::VIM.connect connection_options
       @options = connection_options
     end
@@ -18,8 +18,8 @@ module Mesh
     end
 
     def clone_machine(vm_type, vm_target, default_vm_folder, machine_options)
-      Mesh::template.has_key? vm_type.to_sym or raise "unknown machine type #{vm_type}, known types are #{Mesh::template.keys.to_s}"
-      template = Mesh::template[vm_type.to_sym]
+      Vmesh::template.has_key? vm_type.to_sym or raise "unknown machine type #{vm_type}, known types are #{Vmesh::template.keys.to_s}"
+      template = Vmesh::template[vm_type.to_sym]
       vm_dest = VSphere.parse_vm_target vm_target, default_vm_folder
       vm_template = get_machine(template[:name], options[:datacenter])
       # Refactor & pass in options with the get or alternatively add a get and set method
@@ -29,10 +29,10 @@ module Mesh
       datacenter = get_datacenter(options[:datacenter])
       datastore = get_datastore(machine_options[:datastore], datacenter)
       raise "No datastore found matching #{machine_options[:datastore]}. Exiting." if datastore.nil?
-      Mesh::logger.debug "Got datastore named #{datastore.name} with free space #{datastore.free_space}."
-      Mesh::logger.debug "Creating vm in folder #{vm_dest[:folder]} with name #{vm_dest[:name]}."
+      Vmesh::logger.debug "Got datastore named #{datastore.name} with free space #{datastore.free_space}."
+      Vmesh::logger.debug "Creating vm in folder #{vm_dest[:folder]} with name #{vm_dest[:name]}."
       folder = get_folder(vm_dest[:folder], options[:datacenter])
-      Mesh::logger.debug "Using folder #{folder.to_s}."
+      Vmesh::logger.debug "Using folder #{folder.to_s}."
       vm_template.clone_to(vm_dest[:name], folder, datastore, spec, pool)
     end
 
@@ -43,17 +43,17 @@ module Mesh
 
     def get_resource_pool(name, datacenter_name)
       # KRUT this should be a ResourcePool wrapper object instead?
-      Mesh::logger.debug "Chasing resource pool #{name}"
+      Vmesh::logger.debug "Chasing resource pool #{name}"
       Datacenter::find_pool(@vim, name, datacenter_name)
     end
 
     def get_datastore(name, datacenter)
-      Mesh::logger.debug "Getting datastore #{name}"
+      Vmesh::logger.debug "Getting datastore #{name}"
       Datastore::get(@vim, name, datacenter)
     end
 
     def get_datacenter(name)
-      Mesh::Datacenter::get(@vim, name)
+      Vmesh::Datacenter::get(@vim, name)
     end
 
     def root_folder
@@ -65,7 +65,7 @@ module Mesh
     end
 
     def get_folder(path, datacenter_name = @options[:datacenter])
-      Mesh::logger.debug "Looking for folder #{path}."
+      Vmesh::logger.debug "Looking for folder #{path}."
       path.to_s == '/' ? vm_root_folder : vm_root_folder.traverse(path)
     end
 

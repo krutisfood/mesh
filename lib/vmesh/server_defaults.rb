@@ -1,4 +1,4 @@
-module Mesh
+module Vmesh
   @template = {
     :windows_dmz => {
       :name => 'Templates/W2012_DC',

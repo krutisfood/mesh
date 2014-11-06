@@ -1,6 +1,6 @@
-= mesh
+= vmesh
 
 Describe your project here
 
-:include:mesh.rdoc
+:include:vmesh.rdoc
 

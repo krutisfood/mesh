@@ -1,12 +1,12 @@
 require 'test_helper'
 
 include RbVmomi
-include Mesh
+include Vmesh
 
 class MachineTest < Test::Unit::TestCase
 
   def setup
-    Mesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)
+    Vmesh::logger = Logger.new(RUBY_PLATFORM =~ /mswin|mingw/ ? 'NUL:' : '/dev/null', 7)
   end
 
   def teardown

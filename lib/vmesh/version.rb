@@ -1,3 +1,3 @@
-module Mesh
+module Vmesh
   VERSION = '0.1.3'
 end

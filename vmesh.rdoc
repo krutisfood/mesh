@@ -1,0 +1,5 @@
+= vmesh
+
+Generate this with
+    vmesh rdoc
+After you have described your command line interface
