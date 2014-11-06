@@ -3,16 +3,16 @@ Feature: My bootstrapped app kinda works
   I want to have aruba and cucumber setup
   So I don't have to do it myself
 
-  Scenario: mesh just runs
-    When I get help for "mesh"
+  Scenario: vmesh just runs
+    When I get help for "vmesh"
     Then the exit status should be 0
 
 
-  Scenario: mesh create just runs
-    When I get help for "mesh create"
+  Scenario: vmesh create just runs
+    When I get help for "vmesh create"
     Then the exit status should be 0
 
-  Scenario: mesh power just runs
-    When I get help for "mesh power"
+  Scenario: vmesh power just runs
+    When I get help for "vmesh power"
     Then the exit status should be 0
 
