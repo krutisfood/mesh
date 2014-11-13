@@ -21,6 +21,16 @@ Vmesh.logger = Logger.new(STDOUT)
 
 config_filename = '.vmesh.rc'
 
+def check_migrate
+  Dir.glob(File.join(File.expand_path(ENV['HOME']),'.mesh.*.rc')).each do |mesh_file|
+    new_name = mesh_file.gsub('.mesh','.vmesh')
+    Vmesh.logger.info "Migrating #{mesh_file} from #{File.basename(mesh_file)} to #{new_name}"
+    File.rename mesh_file, new_name
+  end
+end
+
+check_migrate
+
 if ARGV.count >= 2
   host_alias = ARGV[0]
   init_config = (ARGV.last == 'initconfig')

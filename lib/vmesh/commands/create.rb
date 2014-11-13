@@ -12,6 +12,15 @@ command :create do |c|
   c.long_desc 'Destination folder for the vm(s), will be ignored for any vms with a folder supplied as part of the name'
   c.flag [:f, :folder]
 
+# This wasn't working for what-ever reason, no error, just no effect
+  #c.desc 'Number of CPUs'
+  #c.long_desc 'Number of CPUs'
+  #c.flag [:c, :cpus]
+#
+  #c.desc 'MB of RAM'
+  #c.long_desc 'MB of RAM'
+  #c.flag [:r, :ramMB]
+
   c.desc 'Destination Machine IP Address'
   c.long_desc 'Destination machine IP Address, when creating multiple vms ips will be calculated by incrementing this value'
   c.flag :ip_address
@@ -31,6 +40,8 @@ command :create do |c|
     vm_targets.split(',').each do |vm_target|
       machine_options[:ip_address] = ip_address if ip_address.to_s != ''
       machine_options[:datastore] = options[:datastore] if options[:datastore].to_s != ''
+      machine_options[:memoryMB] = options[:ramMB] if options[:ramMB].to_s != ''
+      machine_options[:numCPUs] = options[:cpus] if options[:cpus].to_s != ''
       new_vm = vm_manager.clone_machine(vm_type, vm_target, default_vm_folder, machine_options)
       Vmesh.logger.info "#{vm_type}, #{vm_target}, #{machine_options}"
       ip_address = IPAddr.new(ip_address).succ.to_s if ip_address.to_s != ''

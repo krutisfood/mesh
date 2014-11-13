@@ -19,21 +19,24 @@ module Vmesh
 
     def clone_machine(vm_type, vm_target, default_vm_folder, machine_options)
       Vmesh::template.has_key? vm_type.to_sym or raise "unknown machine type #{vm_type}, known types are #{Vmesh::template.keys.to_s}"
+      config = {}
       template = Vmesh::template[vm_type.to_sym]
       vm_dest = VSphere.parse_vm_target vm_target, default_vm_folder
-      vm_template = get_machine(template[:name], options[:datacenter])
+      vm_template = get_machine(template[:name], @options[:datacenter])
       # Refactor & pass in options with the get or alternatively add a get and set method
       spec = get_custom_spec(template[:spec])
       spec.destination_ip_address = machine_options[:ip_address] if machine_options[:ip_address]
-      pool = get_resource_pool(options[:resource_pool], options[:datacenter])
-      datacenter = get_datacenter(options[:datacenter])
+      config[:numCPUs] = machine_options[:numCPUs] if machine_options[:numCPUs].to_s != ''
+      config[:memoryMB] = machine_options[:memoryMB] if machine_options[:memoryMB].to_s != ''
+      pool = get_resource_pool(@options[:resource_pool], @options[:datacenter])
+      datacenter = get_datacenter(@options[:datacenter])
       datastore = get_datastore(machine_options[:datastore], datacenter)
       raise "No datastore found matching #{machine_options[:datastore]}. Exiting." if datastore.nil?
       Vmesh::logger.debug "Got datastore named #{datastore.name} with free space #{datastore.free_space}."
       Vmesh::logger.debug "Creating vm in folder #{vm_dest[:folder]} with name #{vm_dest[:name]}."
-      folder = get_folder(vm_dest[:folder], options[:datacenter])
+      folder = get_folder(vm_dest[:folder], @options[:datacenter])
       Vmesh::logger.debug "Using folder #{folder.to_s}."
-      vm_template.clone_to(vm_dest[:name], folder, datastore, spec, pool)
+      vm_template.clone_to(vm_dest[:name], folder, datastore, spec, pool, config)
     end
 
     def get_custom_spec(name)
@@ -61,7 +64,7 @@ module Vmesh
     end
 
     def vm_root_folder
-      @vim.serviceInstance.content.rootFolder.traverse(options[:datacenter]).vmFolder
+      @vim.serviceInstance.content.rootFolder.traverse(@options[:datacenter]).vmFolder
     end
 
     def get_folder(path, datacenter_name = @options[:datacenter])
