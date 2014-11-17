@@ -1,5 +1,5 @@
 
-desc 'revert to last vm snapshots'
+desc 'revert vm to previous snapshot'
 arg_name 'vm_name'
 
 command :revert do |c|
