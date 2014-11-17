@@ -8,6 +8,26 @@ Vmesh is a Command Suite (think git) to make managing VMWare components easier a
 
 Vmesh is currently Alpha, hence the 0-dot version; it is susceptible to methods, classes and modules being renamed, added or deleted.
 
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [Command suite for VMWare](#)
+  - [What is Vmesh?](#)
+  - [THIS IS ALPHA!](#)
+  - [Setup](#)
+      - [I don't want to type my connection config every time](#)
+      - [How to setup cloning servers](#)
+      - [AMG It complains about vtypes and stuff](#)
+  - [Usage](#)
+    - [Help](#)
+    - [Create or clone](#)
+          - [IP Handling](#)
+          - [How vmesh deals with datastores](#)
+    - [Power](#)
+        - [Deleting a VM can be done with the command](#)
+    - [List](#)
+  - [TODOs](#)
+  - [Copyright](#)
+
 ## Setup
 
 Install the gem
