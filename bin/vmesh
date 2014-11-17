@@ -103,12 +103,14 @@ pre do |global,command,options,args|
   # chosen command
   # Use skips_pre before a command to skip this block
   # on that command only
+  if global[:user].to_s == ''
+    not_so_secret_username = ask("Enter Username please:") {|q| q.echo = true}
+    global['u'] = global[:u] = global['user'] = global[:user] = not_so_secret_username
+  end
+
   if global[:password].to_s == ''
     the_super_secret_password = ask("Enter Password for #{global[:user]} please:") {|q| q.echo = false}
-    global['p'] = the_super_secret_password
-    global[:p] = the_super_secret_password
-    global['password'] = the_super_secret_password
-    global[:password] = the_super_secret_password
+    global['p'] = global[:p] = global['password'] = global[:password] = the_super_secret_password
   end
   true
 end

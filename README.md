@@ -10,32 +10,65 @@ Vmesh is currently Alpha, hence the 0-dot version; it is susceptible to methods,
 
 ## Setup
 
-* Rbvmomi hack required for nokogiri breaking change in 1.6.1
-
-  * https://github.com/vmware/rbvmomi/pull/32
-
-* get the gem (if it exists) or just clone the repo if it doesn't.  If working in the repo prefix all commands with "bundle exec "
+Install the gem
 
 ```
-  vmesh <options_here> initconfig
+  gem install vmesh
 ```
 
-To setup multiple connections use the form
+You can now start using it, e.g. list top level dirs
+```
+  vmesh --datacenter=my.datacenter.com --host=my.vcenter.host.com ls
+```
+
+#### I don't want to type my connection config every time
+
+Vmesh can save config so you don't have to type it each time, use initconfig with an alias like so
 
 ```
-  vmesh <site_name> <options_here> initconfig
+  vmesh my_alias --datacenter=my.datacenter.com --host=my.vcenter.host.com initconfig
 ```
 
-Edit the config file to set your available image types and the corresponding vm template to use in cloning, any relevant custom specs.  One day this will move externally, perhaps etcd and/or a config file able to be specified on command line.
+Commands are now as easy as
+
+```
+  vmesh my_alias ls
+```
+
+#### How to setup cloning servers
+
+Define the image types, their relevant template and any custom specs by editing the `server_defaults.rb` file
+
 ```
   lib/vmesh/server_defaults.rb 
 ```
+
+e.g. an entry similar to
+```
+  :linux => {
+    :name => 'Templates/CENTOS_6',
+    :spec => 'Linux No Prompt'
+  },
+```
+
+then to create a server named `vmlinux01` cloned from `'Templates/CENTOS_6'` template using a custom spec called `Linux No Prompt`
+
+```
+  vmesh create vmlinux01 linux
+```
+
+#### AMG It complains about vtypes and stuff
+
+* There is (or at least was?) an Rbvmomi hack required for nokogiri breaking change in 1.6.1, I'm still trying to figure the best way around this...
+
+  * https://github.com/vmware/rbvmomi/pull/32
+
 
 ## Usage
 
 ### Help
 
-To get help
+Get help
   
 ```
   vmesh --help
@@ -49,10 +82,26 @@ Help on a specific command
 
 ### Create or clone
 
-To Clone VM(s) from a template, assigning ips starting at <ip_address>, datastore will use a datastore with exact match, if none exists it will find all datastores which contain this string and use the one with the most free space.
+###### IP Handling
+For multiple servers vmesh automatically increments the IP Address, e.g.
+```
+  vmesh create vmweb01,vmweb02 linux --ip_address='192.168.0.10'
+```
+will create the following servers
+|| server name || ip ||
+| vmweb01 | 192.168.0.10 |
+| vmweb02 | 192.168.0.11 |
+
+Of course you can just comma separate the IPs too
+```
+  vmesh create vmweb01,vmweb02 linux --ip_address='192.168.0.10','192.168.0.11'
+```
+
+###### How vmesh deals with datastores
+When specifying datastore vmesh will use a datastore matching name exactly, if it doesn't find a match it will gets all datastores with this string in their name then uses the one with the most free space.
 
 ```
-  vmesh [host_alias] create my_vm_name1,my_vm_name2 <type> [--ip_address='<ip_address>'] --datastore='SEARCH_STRING' [--folder='DESTINATION_FOLDER']
+  vmesh create my_vm_name2 windows12 [--ip_address='<ip_address>'] --datastore='SEARCH_STRING' [--folder='DESTINATION_FOLDER']
 ```
 e.g. for the above, if datastores exist with names FIRST_SEARCH_STRING, ANOTHER_SEARCH_STRING it will find both (as they both contain "SEARCH_STRING") then use the one with the most free space.
 
@@ -61,29 +110,39 @@ e.g. for the above, if datastores exist with names FIRST_SEARCH_STRING, ANOTHER_
 To change the power state of a VM
 
 ```
-  vmesh [host_alias] power 'folder/machine_name' on
+  vmesh power 'folder/machine_name' on
 ```
 
 ```
-  vmesh [host_alias] power 'folder/machine_name' off
+  vmesh power 'folder/machine_name' off
 ```
 
+##### Deleting a VM can be done with the command
+
 ```
-  vmesh [host_alias] power 'folder/machine_name' destroy
+  vmesh power 'folder/machine_name' destroy
 ```
 
 ### List
 
-To list all vms and directories on default host
+_Note_ you can use `ls`, `dir` or `list`
+
+List vms and directories at the top level
 
 ```
-  vmesh [host_alias] list|ls|dir
+  vmesh ls
+```
+
+List recursively
+
+```
+  vmesh ls -r
 ```
 
 List directories only
 
 ```
-  vmesh [host_alias] list|ls|dir -d 
+  vmesh ls -d
 ```
 
 ## TODOs
@@ -95,10 +154,6 @@ List directories only
 * Create
 
   * Don't create new vm if less than 10% space
-
-* List 
-
-  * Non-recursive listing
 
 * Power
   
