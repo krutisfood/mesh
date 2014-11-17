@@ -29,6 +29,10 @@ module Vmesh
       @vm.send(@@states[desired_state])
     end
 
+    def revert
+      @vm.RevertToCurrentSnapshot_Task.wait_for_completion
+    end
+
     def command
       raise NotImplementedError
     end
