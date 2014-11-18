@@ -25,6 +25,7 @@ Vmesh is currently Alpha, hence the 0-dot version; it is susceptible to methods,
     - [Power](#)
         - [Deleting a VM can be done with the command](#)
     - [List](#)
+    - [Disk Usage](#)
   - [TODOs](#)
   - [Copyright](#)
 
@@ -163,6 +164,22 @@ List directories only
 
 ```
   vmesh ls -d
+```
+
+### Disk Usage
+
+_Note_ you can use `df` or `diskspace`
+
+Display disk usage for all disks at current dc
+
+```
+  vmesh df
+```
+
+Display disk usage for all disks with 'gold' in the name
+
+```
+  vmesh df gold
 ```
 
 ## TODOs

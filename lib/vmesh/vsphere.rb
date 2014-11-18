@@ -6,9 +6,17 @@ module Vmesh
   class VSphere
     attr_accessor :vim, :options
     def initialize(connection_options)
-      Vmesh::logger.debug "Opening connection to #{connection_options['host']}"
-      @vim = RbVmomi::VIM.connect connection_options
-      @options = connection_options
+      Vmesh::logger.debug "Opening connection to #{connection_options['host']} #{connection_options.inspect}"
+      opts = {
+        :host => connection_options[:host],
+        :user => connection_options[:user],
+        :password => connection_options[:password],
+        :datacenter => connection_options[:datacenter],
+        :host => connection_options[:host],
+        :insecure => connection_options[:insecure],
+      }
+      @vim = RbVmomi::VIM.connect opts
+      @options = opts
     end
 
     # Can we search through the datacenters for a machine?

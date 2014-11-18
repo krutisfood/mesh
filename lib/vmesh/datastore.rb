@@ -8,7 +8,12 @@ module Vmesh
     end
 
     def self.get(vim, name, datacenter)
-      Vmesh::logger.debug "Getting datastore named #{name} at datacenter #{datacenter.name}." 
+      Vmesh::logger.debug "Getting a single datastore named #{name} at datacenter #{datacenter.name}."
+      get_all_matching(vim,name,datacenter).sort_by{ |ds| ds.free_space }.reverse.first
+    end
+
+    def self.get_all_matching(vim, name, datacenter)
+      Vmesh::logger.debug "Getting datastore matching name #{name} at datacenter #{datacenter.name}."
       stores = self.get_all(vim, datacenter).select{ |ds| ds.name == name }
       if stores.nil? or stores.empty?
         Vmesh::logger.info "No exact match found, searching for partial match"
@@ -16,8 +21,9 @@ module Vmesh
         Vmesh::logger.debug "Found #{stores.count} datastores."
         Vmesh::logger.debug "#{stores.map{|ds| "Name #{ds.name}, free space #{ds.free_space}"}}"
       end
-      stores.sort_by{ |ds| ds.free_space }.reverse.first
+      stores
     end
+
 
     def self.get_all(vim, datacenter)
       Vmesh::logger.debug "get_all datastores at #{datacenter.name}."

@@ -17,7 +17,7 @@ include GLI::App
 version Vmesh::VERSION
 Vmesh.logger = Logger.new(STDOUT)
 @logger = Vmesh.logger
-
+@logger.level = Logger::WARN
 
 config_filename = '.vmesh.rc'
 
@@ -71,31 +71,10 @@ desc 'VCenter Resource Pool'
 arg_name 'vcenter resource pool'
 flag [:r,:resource_pool]
 
+desc 'Run in debug mode'
+switch [:debug]
+
 commands_from 'vmesh/commands'
-
-desc 'TODO Describe destroy here'
-arg_name 'Describe arguments to destroy here'
-command :destroy do |c|
-  c.action do |global_options,options,args|
-    puts "destroy command ran"
-  end
-end
-
-desc 'TODO Describe run here'
-arg_name 'Describe arguments to run here'
-command :run do |c|
-  c.action do |global_options,options,args|
-    puts "run command ran"
-  end
-end
-
-desc 'TODO Describe info here'
-arg_name 'Describe arguments to info here'
-command :info do |c|
-  c.action do |global_options,options,args|
-    puts "info command ran"
-  end
-end
 
 pre do |global,command,options,args|
   # Pre logic here
@@ -103,6 +82,8 @@ pre do |global,command,options,args|
   # chosen command
   # Use skips_pre before a command to skip this block
   # on that command only
+  @logger.level = Logger::DEBUG if global[:debug]
+
   if global[:user].to_s == ''
     not_so_secret_username = ask("Enter Username please:") {|q| q.echo = true}
     global['u'] = global[:u] = global['user'] = global[:user] = not_so_secret_username
