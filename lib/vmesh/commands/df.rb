@@ -14,8 +14,9 @@ command [:df,:diskspace] do |c|
     end
     puts '%-30.30s%15.15s%15.15s%15.15s%8.8s' %  ["Name","Size","Available","Used","Use%"]
     all_datastores.each do |ds|
-      pc_free = (ds.free_space.to_i * 100) / ds.capacity.to_i
-      puts '%-30.30s%15.15s%15.15s%15.15s%8.8s' % ["#{ds.name}","#{ds.capacity}","#{ds.free_space}","#{ds.capacity}","#{pc_free}%"]
+      ds_used = ds.capacity - ds.free_space
+      pc_used = (ds_used.to_i * 100) / ds.capacity.to_i
+      puts '%-30.30s%15.15s%15.15s%15.15s%8.8s' % ["#{ds.name}","#{ds.capacity}","#{ds.free_space}","#{ds_used}","#{pc_used}%"]
     end
   end
 end

@@ -13,6 +13,7 @@ module Vmesh
         :password => connection_options[:password],
         :datacenter => connection_options[:datacenter],
         :host => connection_options[:host],
+        :resource_pool => connection_options[:resource_pool],
         :insecure => connection_options[:insecure],
       }
       @vim = RbVmomi::VIM.connect opts

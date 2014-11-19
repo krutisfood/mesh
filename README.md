@@ -104,27 +104,31 @@ Help on a specific command
 ### Create or clone
 
 ###### IP Handling
-For multiple servers vmesh automatically increments the IP Address, e.g.
+
+Assuming you have a custom spec defined vmesh can set the IP Address like
 ```
-  vmesh create vmweb01,vmweb02 linux --ip_address='192.168.0.10'
+  vmesh create vmweb01 linux --ip_address='192.168.0.10'
 ```
-will create the following servers
+
+When creating multiple servers vmesh automatically increments the IP Address, e.g.
+```
+  vmesh create "vmweb01,vmweb02" linux --ip_address='192.168.0.10'
+```
+creates the following servers
 || server name || ip ||
 | vmweb01 | 192.168.0.10 |
 | vmweb02 | 192.168.0.11 |
 
-Of course you can just comma separate the IPs too
-```
-  vmesh create vmweb01,vmweb02 linux --ip_address='192.168.0.10','192.168.0.11'
-```
 
 ###### How vmesh deals with datastores
+
 When specifying datastore vmesh will use a datastore matching name exactly, if it doesn't find a match it will gets all datastores with this string in their name then uses the one with the most free space.
 
 ```
   vmesh create my_vm_name2 windows12 [--ip_address='<ip_address>'] --datastore='SEARCH_STRING' [--folder='DESTINATION_FOLDER']
 ```
 e.g. for the above, if datastores exist with names FIRST_SEARCH_STRING, ANOTHER_SEARCH_STRING it will find both (as they both contain "SEARCH_STRING") then use the one with the most free space.
+
 
 ### Power
 
