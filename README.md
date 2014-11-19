@@ -115,9 +115,10 @@ When creating multiple servers vmesh automatically increments the IP Address, e.
   vmesh create "vmweb01,vmweb02" linux --ip_address='192.168.0.10'
 ```
 creates the following servers
-|| server name || ip ||
-| vmweb01 | 192.168.0.10 |
-| vmweb02 | 192.168.0.11 |
+| server name | ip           |
+| ----------- | ------------ |
+| vmweb01     | 192.168.0.10 |
+| vmweb02     | 192.168.0.11 |
 
 
 ###### How vmesh deals with datastores
