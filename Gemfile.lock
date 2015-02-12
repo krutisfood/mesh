@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vmesh (0.1.5)
+    vmesh (0.1.6)
       gli (= 2.9.0)
       highline (~> 1.6)
       logger (= 1.2.8)
