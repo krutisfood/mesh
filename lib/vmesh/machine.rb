@@ -63,5 +63,14 @@ module Vmesh
 
       Machine.new(@vm.CloneVM_Task(:folder => vm_folder, :name => vm_name, :spec => clone_spec, :numCPUs => config[:numCPUs], :memoryMB => config[:memoryMB]).wait_for_completion)
     end
+
+    def annotation
+      @vm.config.annotation
+    end
+
+    def annotation=(note)
+      Vmesh::logger.debug "Adding annotation \"#{note}\" to the vm."
+      @vm.ReconfigVM_Task(:spec => RbVmomi::VIM.VirtualMachineConfigSpec(:annotation => note)).wait_for_completion
+    end
   end
 end

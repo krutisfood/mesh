@@ -22,6 +22,7 @@ Vmesh is currently Alpha, hence the 0-dot version; it is susceptible to methods,
     - [Create or clone](#)
           - [IP Handling](#)
           - [How vmesh deals with datastores](#)
+    - [Annotate](#)
     - [Power](#)
         - [Deleting a VM can be done with the command](#)
     - [List](#)
@@ -95,7 +96,7 @@ Get help
   vmesh --help
 ```
 
-Help on a specific command
+Help on a specific command, e.g. get help for create
 
 ```
   vmesh create --help
@@ -130,6 +131,19 @@ When specifying datastore vmesh will use a datastore matching name exactly, if i
   vmesh create my_vm_name2 windows12 [--ip_address='<ip_address>'] --datastore='SEARCH_STRING' [--folder='DESTINATION_FOLDER']
 ```
 e.g. for the above, if datastores exist with names FIRST_SEARCH_STRING, ANOTHER_SEARCH_STRING it will find both (as they both contain "SEARCH_STRING") then use the one with the most free space.
+
+
+### Create or clone
+
+To set the annotations on a vm named vmweb01
+```
+  vmesh annotate vmweb01 set "Here is a nice note about this rather generically named web server\nAnd here's a new line simply because we can!"
+```
+
+To get any annotation
+```
+  vmesh annotate vmweb01 get
+```
 
 
 ### Power
@@ -190,6 +204,8 @@ Display disk usage for all disks with 'gold' in the name
 
 ## TODOs
 
+* Find vm would be nice
+
 * Sort out problem with upstream rbvmomi/nogokiri
 
   * Related bug here https://github.com/nsidc/vagrant-vsphere/issues/28
@@ -204,11 +220,11 @@ Display disk usage for all disks with 'gold' in the name
 
 * General
 
+  * Make the output nicer for terminal output, as in, passing to other commands.
+
   * Performance enhancements would be nice
 
   * Server defaults in external configuration, e.g. Symlink to config/shared/ or etcd
-
-* Vmesh everything else :-)
 
 
 ## Copyright
