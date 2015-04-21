@@ -6,7 +6,7 @@ module Vmesh
   class VSphere
     attr_accessor :vim, :options
     def initialize(connection_options)
-      Vmesh::logger.debug "Opening connection to #{connection_options['host']} #{connection_options.inspect}"
+      Vmesh::logger.debug "Opening connection to #{connection_options[:host]} as #{connection_options[:user]}, dc #{connection_options[:datacenter]}, resource pool #{connection_options[:resource_pool]}, insecure #{connection_options[:insecure]}"
       opts = {
         :host => connection_options[:host],
         :user => connection_options[:user],
