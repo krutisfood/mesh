@@ -12,6 +12,7 @@ require 'vmesh/custom_spec.rb'
 require 'vmesh/datacenter.rb'
 require 'vmesh/vsphere.rb'
 require 'vmesh/datastore.rb'
+require 'vmesh/ping_helper.rb'
 
 module Vmesh
   def self.logger

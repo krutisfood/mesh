@@ -33,6 +33,9 @@ command :create do |c|
     Vmesh::template.has_key? vm_type.to_sym or raise "unknown machine type #{vm_type}, known types are #{Vmesh::template.keys.to_s}"
 
     ip_address = options[:ip_address]
+    if ip_address.to_s != ''
+      raise RuntimeError, "IP Address #{ip_address} already in use" if Vmesh::pingecho(ip_address, 1)
+    end
     machine_options = {}
     vm_manager = Vmesh::VSphere.new global_options
     #default_vm_folder = vm_manager.get_folder(options[:folder]) if options[:folder]
